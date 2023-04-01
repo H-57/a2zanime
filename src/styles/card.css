@@ -1,0 +1,58 @@
+* {
+    margin: 0%;
+    padding: 0%;
+    list-style-type: none;
+    color: aliceblue;
+}
+
+body {
+    background: #120922;
+    list-style-type: none;
+}
+
+
+
+
+
+li:hover .thumbnail {
+    width: 90%;
+    transform: scale(1.5);
+
+}
+
+
+.play {
+    /* display: none; */
+    position: relative;
+width: 50px;
+
+
+    top: -72%;
+    left: 33%; 
+    font-size: 50px !important;
+}
+li:hover .play{
+    display: block;
+}
+
+.thumbnail{
+    width: 100%;
+    height:100%
+  }
+  @media only screen and (max-width: 600px) {
+
+#video{
+    justify-content: space-around;
+}
+
+  }
+
+  .navimg{
+    position: absolute;
+    opacity: 0.7;
+    z-index: -55;
+    
+  top:0;
+    width: 100%;
+    height: 5rem;
+    }
