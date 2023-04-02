@@ -22,7 +22,7 @@ export async function getStaticPaths() {
  
     
   let data = await (
-    await fetch(`https://animeweb-d093d-default-rtdb.firebaseio.com/.json`)
+    await fetch(`${process.env.API_URL}/.json`)
   ).json();
   data=Object.keys(data)
   
@@ -46,7 +46,7 @@ export const getStaticProps = async (context) => {
     const name=context.params.name
     console.log(name)
       let res = await fetch(
-        `https://animeweb-d093d-default-rtdb.firebaseio.com/${name}/season.json`
+        `${process.env.API_URL}/${name}/season.json`
       );
       const data = await res.json();
       return {

@@ -2,16 +2,12 @@ import React from 'react'
 import Image from 'next/image'
 
 function VideoCards(obj) {
-    
-    
-    const hello=(e)=>{
-        console.log(e)
-        // console.log(getElementsByClassName('card'))
-       }
+ 
+
   return (
    <>
   
-    <li className="card" onClick={hello} >
+    <li className="card" onClick={obj.event} id={obj.number+1} >
     
 <figure><Image src={obj.image} alt={obj.title} className="thumbnail" width={150} height={200}/></figure>
 
