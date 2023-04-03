@@ -1,15 +1,29 @@
-import React from 'react'
+import {useRef} from 'react'
 import Image from 'next/image'
 
+
 function VideoCards(obj) {
- 
+
+    const videoNo=useRef(0);
+    let lo2=obj.lo1;
+
+const vid=()=>{
+let lielm=document.getElementsByClassName('check')
+console.log(lielm)
+    Array.from(lielm).forEach((element) => {                //travel all card and remove check class
+        element.classList.remove('check')})
+        document.getElementById("myFrame").setAttribute("src",  "https://www.short.ink/"+lo2[(videoNo.current.id)-1])
+    videoNo.current.classList.add('check')
+    document.getElementById("myFrame").scrollIntoView();
+}
+
 
   return (
    <>
   
-    <li className="card" onClick={obj.event} id={obj.number+1} >
+    <li ref={videoNo} className="card" onClick={vid} id={obj.number+1} >
     
-<figure><Image src={obj.image} alt={obj.title} className="thumbnail" width={150} height={200}/></figure>
+<figure><Image src={obj.image} alt={obj.title} className="thumbnail" width={150} height={20}/></figure>
 
 <span className="epnumber">Episode {obj.number +1}</span>
 <header><h3> {obj.title}</h3></header>
@@ -21,24 +35,24 @@ function VideoCards(obj) {
 /* for define size of video cards */
 .card {
     width: 10rem;
-    height: 12rem;
+    height: 15rem;
     color: aliceblue;
-    /* border: solid 1px red; */
-    /* margin: 5px; */
+    
     background: #1b0f30;
     border-radius: 9px;
     cursor: pointer;
+    overflow:hidden
 }
 
 /* for define image in card */
 .thumbnail {
     position: relative;
-    width: 90%;
+    width: 100%;
     top: 2%;
     left: 5%;
     border-radius: 10px;
-    transform: scale(1);
-    transition: all .4s ease-in-out;
+   
+    transition: all 1s ease-in-out;
     height: 100%;
 
 
@@ -88,7 +102,7 @@ li:hover .thumbnail {
 
   .card {
       width: 80vw;
-      height: 50vh;
+      height: 55vh;
   }
   .thumbnail{
     width: 100%;

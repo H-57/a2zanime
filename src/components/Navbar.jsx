@@ -8,13 +8,13 @@ function Navbar() {
      <ul>
 
 <Link href="/"><li>Home</li></Link>
-<Link href="/"><li>Anime</li></Link>
+<Link href="/p/pokemon/season1"><li>Anime</li></Link>
 <Link href="/p/Allseason"><li>Sitemap</li></Link>
 <Link href="/about"><li>About</li></Link>
 <Link href="/"><li>Contact</li></Link>
 </ul>
 </nav>
-<Image className='navimg' src="https://hacker57.netlify.com/src/navbar.gif" alt=""  width="50" height="50"/>
+<Image className='navimg' src="https://hacker57.netlify.com/src/navbar.gif" alt="navbar image"  width="50" height="50"/>
 <style jsx>
 {
 `
