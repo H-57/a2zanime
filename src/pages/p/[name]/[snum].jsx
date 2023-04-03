@@ -1,5 +1,6 @@
 import VideoCards from "../../../components/VideoCards";
 import {useState} from 'react'
+import Head from "next/head";
 
 
 
@@ -86,17 +87,24 @@ const handelNext=()=>{
         
           return (
             <>
-              
+              <Head>
+                <title>Pokemon Season 01 Indigo League All Episodes Download In Hindi </title>
+                <meta name="description" content="Pokemon Indigo League in Hindi, Pokemon Season - 01 in Hindi, Pokemon Season 01 hindi, Pokemon Hindi Episodes, Pokemon Indigo League Episodes in Hindi English | 480p 720p 1080p"/>
+                  <meta name="keywords" content="all anime videos,video,pokemon"/>
+              </Head>
+              <h1>
+Pokemon Season 01 Indigo League All Episodes Download In Hindi In 720P, 1080P</h1>
           <div style={{height: "400px"}}><iframe style={{height: "400px"}} allowFullScreen="" frameBorder={0}  id="myFrame"
                 src={`https://www.short.ink/${video}`}
                 
                 width="100%"></iframe></div>
-                <h1>episode {videoNo}</h1>
+                
       <div className="conbtn">
 
         <button onClick={handelBack}  className="btn " >back</button>
         <button onClick={handelNext} className="btn ">next</button>
       </div>
+      <h2>It’s Ash Ketchum’s tenth birthday, and he’s ready to do what many 10-year-olds in the Kanto region set out to do—become a Pokémon Trainer! Things don’t go exactly the way he planned when he ends up with a Pikachu instead of a standard first Pokémon, and winning Gym Badges turns out to be much tougher than he thought. Luckily he’s got former Gym Leaders Brock and Misty at his side, along with a bevy of new Pokémon friends, including Bulbasaur, Squirtle, and Charmander.</h2>
               <ul id="video" className="video">
                 {data.map((elem, index) => {
                   return <VideoCards event={(e)=>{setvideo(lo1[index]);document.getElementById("myFrame").scrollIntoView();console.log(e.this)}} key={index} title={elem.title} image={elem.image} number={index} />;

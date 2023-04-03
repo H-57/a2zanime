@@ -12,7 +12,7 @@ function VideoCards(obj) {
 <figure><Image src={obj.image} alt={obj.title} className="thumbnail" width={150} height={200}/></figure>
 
 <span className="epnumber">Episode {obj.number +1}</span>
-<header> {obj.title}</header>
+<header><h3> {obj.title}</h3></header>
 <span className="material-symbols-outlined play">
  play_circle
  </span>
