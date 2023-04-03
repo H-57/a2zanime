@@ -89,7 +89,7 @@ const handelNext=()=>{
             <>
               <Head>
                 <title>Pokemon Season 01 Indigo League All Episodes Download In Hindi </title>
-                <meta name="description" content="Pokemon Indigo League in Hindi, Pokemon Season - 01 in Hindi, Pokemon Season 01 hindi, Pokemon Hindi Episodes, Pokemon Indigo League Episodes in Hindi English | 480p 720p 1080p"/>
+                <meta name="description" content="Pokemon Indigo League in Hindi, Pokemon Season - 01 in Hindi, Pokemon Season 01 hindi, Pokemon Hindi Episodes, Pokemon Indigo League Episodes in Hindi English"/>
                   <meta name="keywords" content="all anime videos,video,pokemon"/>
               </Head>
               <h1>
