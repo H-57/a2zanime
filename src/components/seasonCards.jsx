@@ -1,11 +1,11 @@
-
+import Image from "next/image"
 
 function SeasonCards(props) {
   return (
     <>
     <li className="card">
          
-          <figure><img src={props.image} alt={props.title} className="thumbnail" />
+          <figure><Image src={props.image} alt={props.title} className="thumbnail" />
             <span className="material-symbols-outlined play">
               play_circle
               </span>
