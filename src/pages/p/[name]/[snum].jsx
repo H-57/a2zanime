@@ -67,23 +67,26 @@ export const getStaticProps = async (context) => {
       
 
 
-
+      let videonumber=0;
+      const print=(no)=>{
+      videonumber=no
+      console.log(videonumber)
+      }
+   
 
 
 
 const handelBack=()=>{
-  if(videoNO!=0){
-    document.getElementById("myFrame").setAttribute("src",  "https://www.short.ink/"+lo1[(videoNo)-1])
+  if(videonumber!=0){
+    document.getElementById("myFrame").setAttribute("src",  "https://www.short.ink/"+lo1[(videonumber)-1])
   }
 }
 const handelNext=()=>{
-  if(videoNO!=data.length){
-    document.getElementById("myFrame").setAttribute("src",  "https://www.short.ink/"+lo1[(videoNo)-1])
+  if(videonumber!=data.length){
+    document.getElementById("myFrame").setAttribute("src",  "https://www.short.ink/"+lo1[(videonumber)-1])
   }
 }
-      
-
-var lo1 = ["OINV7mrQTL8", "EFFqX4ot0h4", "kaNOVzly9iF", "g1jjiLoTmst", "GYS96P7BcnU", "qlMR0236gRP", "UltbgrZJHIr", "ljhWOYwBmIh", "8TI7tCNdPTB", "iMhB7DCyFvh", "roW6AK8YN8Y", "HOGf0NCZcrO", "LcHzYWe1j1M", "hEay3avgSIE", "sRMjt39gE8j", "8pIZydnDbDs", "8P8aag0EKxs", "FqXIqi3j5g5", "KEaamCSIzwj", "7XC8t9dtpyQ", "MzKXioJTo1z", "XU2PP9yp3Ht", "ABgHHogz6yr", "vcuxjkHllyZ", "oC2aZjnWNhO", "0SlkZwahbcP", "4f63iNC8JQF", "aLKlVD5qLPK", "zSO9VBUeemW", "2SsfadPESUa", "CwyeMsoBXUt", "tvaBp5xRAqv", "cKPVKa9T1TK", "fEXj5jsaPA6", "zfbhUne9RnD", "0juMi5ANesS", "nU0eHhrJ44B", "W2s5lK3GqZA", "sXds4DKAK7L", "D57HCLzCAum", "CIvnNZudEnB", "P0x0GAEWTvL", "0qEGbr3Mb94", "VCQByFAeLtX", "fa8zwHBOnvQ", "sST4zvwpjjj", "0YBV3Nrnadl", "OlSyp2TUwjn", "3uG7UuaHSTC", "5LUvacvZnR9", "y6bs43tcrYv", "l14PWfAgeNF", "Mag2xK0uobv", "RtXBWpre4Q0", "21gQLSPailu", "hyRrV963Lhh", "OdBryzjecsa", "ephfWFPshFc", "WWlR7lFT3rZ", "j4HlImLOvXs", "tEqCOUT2YDf", "w1AueDv5QuK", "tVc2Rn2MK42", "T1EZH1L8uBd", "MkybF6YFx3w", "OnV44oPSa0K", "PIFibGlq70p", "htdiVQ6PLgy", "3pGwdO8LAXn", "wqqMu5KUPFW", "XwZ5Z6s1BV8", "AYbxDO2Po97", "QIaneTQSHs3", "oqPPq03osmW", "NDJfm9iqdKV", "44wiCWCCEaZ", "8Sa4WJIybIh", "5iaoSkzqZ9M",];
+ let lo1 = ["OINV7mrQTL8", "EFFqX4ot0h4", "kaNOVzly9iF", "g1jjiLoTmst", "GYS96P7BcnU", "qlMR0236gRP", "UltbgrZJHIr", "ljhWOYwBmIh", "8TI7tCNdPTB", "iMhB7DCyFvh", "roW6AK8YN8Y", "HOGf0NCZcrO", "LcHzYWe1j1M", "hEay3avgSIE", "sRMjt39gE8j", "8pIZydnDbDs", "8P8aag0EKxs", "FqXIqi3j5g5", "KEaamCSIzwj", "7XC8t9dtpyQ", "MzKXioJTo1z", "XU2PP9yp3Ht", "ABgHHogz6yr", "vcuxjkHllyZ", "oC2aZjnWNhO", "0SlkZwahbcP", "4f63iNC8JQF", "aLKlVD5qLPK", "zSO9VBUeemW", "2SsfadPESUa", "CwyeMsoBXUt", "tvaBp5xRAqv", "cKPVKa9T1TK", "fEXj5jsaPA6", "zfbhUne9RnD", "0juMi5ANesS", "nU0eHhrJ44B", "W2s5lK3GqZA", "sXds4DKAK7L", "D57HCLzCAum", "CIvnNZudEnB", "P0x0GAEWTvL", "0qEGbr3Mb94", "VCQByFAeLtX", "fa8zwHBOnvQ", "sST4zvwpjjj", "0YBV3Nrnadl", "OlSyp2TUwjn", "3uG7UuaHSTC", "5LUvacvZnR9", "y6bs43tcrYv", "l14PWfAgeNF", "Mag2xK0uobv", "RtXBWpre4Q0", "21gQLSPailu", "hyRrV963Lhh", "OdBryzjecsa", "ephfWFPshFc", "WWlR7lFT3rZ", "j4HlImLOvXs", "tEqCOUT2YDf", "w1AueDv5QuK", "tVc2Rn2MK42", "T1EZH1L8uBd", "MkybF6YFx3w", "OnV44oPSa0K", "PIFibGlq70p", "htdiVQ6PLgy", "3pGwdO8LAXn", "wqqMu5KUPFW", "XwZ5Z6s1BV8", "AYbxDO2Po97", "QIaneTQSHs3", "oqPPq03osmW", "NDJfm9iqdKV", "44wiCWCCEaZ", "8Sa4WJIybIh", "5iaoSkzqZ9M",];
        
         //refferancwe for the li cards access  id no
 
@@ -100,7 +103,7 @@ var lo1 = ["OINV7mrQTL8", "EFFqX4ot0h4", "kaNOVzly9iF", "g1jjiLoTmst", "GYS96P7B
               </Head>
               <h1>
 Pokemon Season 01 Indigo League All Episodes Download In Hindi In 720P, 1080P</h1>
-          <div style={{height: "400px"}}><iframe style={{height: "400px"}} allowFullScreen="" frameBorder={0}  id="myFrame"
+          <div style={{height: "400px"}}><iframe style={{height: "400px"}} allowFullScreen={true} frameBorder={0}  id="myFrame"
                 src={`https://www.short.ink/OINV7mrQTL8`}
                 
                 width="100%"></iframe></div>
@@ -117,7 +120,7 @@ Pokemon Season 01 Indigo League All Episodes Download In Hindi In 720P, 1080P</h
               <ul id="video" className="video">
 
                 {data.map((elem, index) => {
-                  return <VideoCards  lo1={lo1}   key={index} title={elem.title} image={elem.image} number={index} />;
+                  return <VideoCards print={print}  lo1={lo1}   key={index} title={elem.title} image={elem.image} number={index} />;
                 })}
               </ul>
              <style jsx>{`
