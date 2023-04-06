@@ -6,17 +6,18 @@ function VideoCards(props) {
 
     const videoNo=useRef(0);
     let lo2=props.lo1;
+ 
 
 const vid=()=>{
 let lielm=document.getElementsByClassName('check')
 // console.log(lielm)
     Array.from(lielm).forEach((element) => {                //travel all card and remove check class
         element.classList.remove('check')})
-        document.getElementById("myFrame").setAttribute("src",  "https://www.short.ink/"+lo2[(videoNo.current.id)-1])
+       props.setiframe(lo2[(videoNo.current.id)-1])
     videoNo.current.classList.add('check')
     document.getElementById("myFrame").scrollIntoView();
     
-        props.print(videoNo.current.id)
+        props.print(videoNo)
     
 }
 

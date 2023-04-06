@@ -5,7 +5,7 @@ function SeasonCards(props) {
     <>
     <li className="card">
          
-          <figure><Image src={props.image} alt={props.title} className="thumbnail" />
+          <figure><Image src={props.image} alt={props.title} className="thumbnail" width={100} height={100}/>
             <span className="material-symbols-outlined play">
               play_circle
               </span>
@@ -27,11 +27,18 @@ function SeasonCards(props) {
    cursor:pointer;
    overflow: hidden;
    }
+   figure{
+     
+   
+    margin:9px;
+  
+  
+ }
    /* for define image in card */
    .thumbnail{
    position:relative;
    width: 90%;
-   
+
    top: 2%;
    left: 5%;
    border-radius: 10px;
@@ -82,7 +89,7 @@ function SeasonCards(props) {
    li:hover .play{
    display: block;
    }
-  
+ 
    @media only screen and (max-width: 400px){
     
         .card{

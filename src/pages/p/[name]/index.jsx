@@ -55,7 +55,8 @@ export const getStaticProps = async (context) => {
               <ul id="video" className="video">
                 {data.map((elem, index) => {
                   
-                  return<Link key={index} href={`/p/${router.query.name}/season${index+1}`}> <SeasonCards   title={elem.title} image={elem.image}  />
+                  return <Link key={index} href={`/p/${router.query.name}/season${index+1}`}> 
+                  <SeasonCards   title={elem.title} image={elem.image}  />
                   </Link>
                 })}
               </ul>
