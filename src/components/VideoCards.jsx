@@ -51,7 +51,11 @@ let lielm=document.getElementsByClassName('check')
 /* for define image in card */
 .thumbnail {
     position: relative;
-    width: 100%;
+
+    
+
+
+    
     top: 2%;
     left: 5%;
     border-radius: 10px;
