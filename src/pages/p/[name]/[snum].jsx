@@ -7,6 +7,7 @@ import Head from "next/head";
 
 
 
+
 export async function getStaticPaths() {
  
     
