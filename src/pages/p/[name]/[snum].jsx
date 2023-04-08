@@ -2,6 +2,11 @@ import VideoCards from "../../../components/VideoCards";
 import { useState, useEffect } from "react";
 import Head from "next/head";
 
+
+
+
+
+
 export async function getStaticPaths() {
   let Aname = await (await fetch(`${process.env.API_URL}/.json`)).json(); //fetch data present in database
 
