@@ -8,38 +8,6 @@ body {
 }
 
 
-
-#feature{
-    width: 50vw;
-    height:50vh
-}
-     #feature Image {
-        height: auto;
-      }
-
-      .slide {
-        display: flex;
-        flex-wrap: wrap;
-        overflow-y: hidden;
-      }
-      .sl1 {
-        width: 100%;
-        height: 50%;
-        overflow: hidden;
-      }
-      .banner Image {
-        width: 100%;
-        height: 100%;
-      }
-      .sl {
-        height: 100%;
-        width: 50%;
-      }
-      .banner h2 {
-        color: #120922;
-        position: relative;
-        bottom: 3rem;
-      }
       #episodeno { font-size: 2rem;
       margin: auto;
       display: block;
@@ -47,27 +15,5 @@ body {
       text-shadow: 0px 2px 3px aqua;
       color: aqua;
     }
-    button:hover {
-      background-color: #0a6bb4;
-      font-size: larger;
-    }
-      @media only screen and (max-width: 400px) {
-        .banner {
-          flex-wrap: wrap;
-        }
-        
-        
-        .slide {
-          flex-direction: column;
-          width: 100%;
-          overflow-x: scroll;
-          height: 17rem;
-        }
-        .sl,
-        .sl1 {
-          width: 80vw;
-          height: 100%;
-          margin-left: 2px;
-          float: right;
-        }
-      }
+   
+     

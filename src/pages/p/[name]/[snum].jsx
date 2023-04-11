@@ -1,7 +1,8 @@
 import VideoCards from "../../../components/VideoCards";
 import { useState, useEffect } from "react";
 import Head from "next/head";
-
+import Link from "next/link";
+import {useRouter} from "next/router";
 
 
 
@@ -46,29 +47,33 @@ export const getStaticProps = async (context) => {
   let res = await fetch(
     `${process.env.API_URL}/${AnimeName}/${Season}.json` //fetch data for a particular anime and its season number
   );
-  let lo3 = await fetch(`${process.env.API_URL}/${AnimeName}/${Season}ep.json`);
-  const lo1data = await lo3.json();
-
   const data = await res.json();
+  let serverEpisodeData = await fetch(`${process.env.API_URL}/${AnimeName}/${Season}ep.json`);
+  const serverEpisode = await serverEpisodeData.json();
+
+  let Seasons = await(await fetch(`${process.env.API_URL}/${AnimeName}/season.json`)).json();
   return {
     props: {
       data,
-      lo1data,
+      serverEpisode,
+      Seasons,
     },
   };
 };
 
-function AnimeName({ data, lo1data }) {
-  let lo1 = lo1data.server1;
-  let SERVER1 = lo1data.server1;
-  let SERVER2 = lo1data.server2;
-  let SERVER3 = lo1data.server3;
-  let SERVER4 = lo1data.server4;
-  let SERVER5 = lo1data.server5;
-
+function AnimeName({ data, serverEpisode,Seasons }) {
+  const router = useRouter();
+  let lo1 = serverEpisode.server1;
+  let SERVER1 = serverEpisode.server1;
+  let SERVER2 = serverEpisode.server2;
+  let SERVER3 = serverEpisode.server3;
+  let SERVER4 = serverEpisode.server4;
+  let SERVER5 = serverEpisode.server5;
+console.log(Seasons)
   const [iframe, setiframe] = useState(SERVER1[0]);
   const [videoNumber, setvideoNumber] = useState(1);
   const [Server, setServer] = useState(SERVER1);
+const [ServerName, setServerName] = useState("Server-1")
 
   const print = (no) => {
     setvideoNumber(parseInt(no.current.id));
@@ -119,17 +124,16 @@ function AnimeName({ data, lo1data }) {
     <>
       <Head>
         <title>
-          Pokemon Season 01 Indigo League All Episodes Download In Hindi{" "}
+          {serverEpisode.title}
         </title>
         <meta
           name="description"
-          content="Pokemon Indigo League in Hindi, Pokemon Season - 01 in Hindi, Pokemon Season 01 hindi, Pokemon Hindi Episodes, Pokemon Indigo League Episodes in Hindi English"
+          content={serverEpisode.description}
         />
         <meta name="keywords" content="all anime videos,video,pokemon" />
       </Head>
       <h1>
-        Pokemon Season 01 Indigo League All Episodes Download In Hindi In 720P,
-        1080P
+        {serverEpisode.heading}
       </h1>
       <div style={{ height: "400px" }}>
         <iframe
@@ -145,74 +149,84 @@ function AnimeName({ data, lo1data }) {
         <button onClick={handelBack} className="btn ">
           back
         </button>
+        
         <button onClick={handelNext} className="btn ">
           next
         </button>
       </div>
-      <div id="episodeno">Episode {videoNumber}</div>
+      <div className="seasonlist">
+        <button onClick={()=>{
+          document.getElementsByClassName('slist')[0].style.display="block"
+        }} className="listbtn">All Episodes </button>
+        <ul className="slist">
+        {Seasons.map((elem, index) => {
+          return (<Link key={index} href={`/p/${router.query.name}/season${index+1}`}> <li>seaon{index+1}</li></Link>)})}
+         
+        
+        </ul>
+        </div>
+      <div id="episodeno">Episode {videoNumber}  ({ServerName})</div>
       <div className="server">
         <button
           className="button-63 "
-          onClick={() => {
+          onClick={(e) => {
             setServer(SERVER1);
             setiframe(Server[videoNumber-1]);
+            setServerName(e.target.innerText)
             console.log(Server);
           }}
         >
-          server-1
+          Server-1
         </button>
 
         <button
           className="button-63 "
-          onClick={() => {
+          onClick={(e) => {
             setServer(SERVER2);
             setiframe(Server[videoNumber-1]);
-           
+            setServerName(e.target.innerText)
             console.log(Server, iframe);
           }}
         >
-          server-2
+          Server-2
         </button>
         <button
           className="button-63 "
-          onClick={() => {
+          onClick={(e) => {
             setServer(SERVER3);
             setiframe(Server[videoNumber-1]);
+            setServerName(e.target.innerText)
             console.log(Server);
           }}
         >
-          server-3
+          Server-3
         </button>
         <button
           className="button-63 "
-          onClick={() => {
+          onClick={(e) => {
             setServer(SERVER4);
             setiframe(Server[videoNumber-1]);
+            setServerName(e.target.innerText)
             console.log(Server);
           }}
         >
-          server-4
+          Server-4
         </button>
         <button
           className="button-63 "
-          onClick={() => {
+          onClick={(e) => {
             setServer(SERVER5);
             setiframe(Server[videoNumber-1]);
+            setServerName(e.target.innerText)
             console.log(Server);
           }}
         >
-          server-5
+          Server-5
         </button>
       </div>
 
       <h2>
-        It’s Ash Ketchum’s tenth birthday, and he’s ready to do what many
-        10-year-olds in the Kanto region set out to do—become a Pokémon Trainer!
-        Things don’t go exactly the way he planned when he ends up with a
-        Pikachu instead of a standard first Pokémon, and winning Gym Badges
-        turns out to be much tougher than he thought. Luckily he’s got former
-        Gym Leaders Brock and Misty at his side, along with a bevy of new
-        Pokémon friends, including Bulbasaur, Squirtle, and Charmander.
+       {serverEpisode.heading2}
       </h2>
 
       <ul id="video" className="video">
@@ -232,6 +246,9 @@ function AnimeName({ data, lo1data }) {
       </ul>
       <style jsx>{`
         /* for ul list store all video cards */
+        .show{
+          display:block
+        }
         .video {
           display: flex;
           flex-wrap: wrap;
@@ -285,7 +302,17 @@ function AnimeName({ data, lo1data }) {
           border-radius: 5px;
           font-size: 34px;
         }
+       
 
+
+        .seasonlist ul{
+        
+width: fit-content;
+          background: blueviolet;
+          font-size: x-large;
+          position: relative;
+        }
+.slist{display:none}
         @media only screen and (max-width: 400px) {
           .server {
             display: flex;
@@ -331,7 +358,7 @@ function AnimeName({ data, lo1data }) {
           cursor: pointer;
           margin-right:20px;
         }
-        
+       
         .button-63:active,
         .button-63:hover {
           outline: 0;
