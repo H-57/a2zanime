@@ -10,7 +10,7 @@ function Hero() {
             <Image className="1stimg"
               src="https://sm.ign.com/t/ign_in/screenshot/default/lookism_r6n7.1280.jpg"
               alt="lookism"
-             layout="fill"
+            width={503} height={500}
             />
             <h2>hello this is title</h2>
           </Link>
@@ -21,7 +21,7 @@ function Hero() {
               <Image className="sll"
                 src="https://hacker57.netlify.app/src/pokemonallseason.png"
                 width={600}
-                height={340}
+                height={240}
                 alt=""
               />
               <h2>hello this is title1</h2>
@@ -61,8 +61,8 @@ function Hero() {
 }
 #feature{
   width:50%;
-  height:100%;
-  position:unset!important
+ 
+  position:relative
 
 }
   .1stimg{
@@ -77,7 +77,7 @@ function Hero() {
    
     .sl1 {
       width: 100%;
-      height: 50%;
+      height: 42%;
       overflow: hidden;
     }
    
@@ -114,9 +114,9 @@ function Hero() {
         height:100%;
       
       }
-      #sl1{
-       
-       
+      .1stimg{
+       width:auto;
+       position:relative
       }
     }
       `}</style>
