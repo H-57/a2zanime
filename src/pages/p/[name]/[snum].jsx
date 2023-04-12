@@ -9,7 +9,7 @@ import {useRouter} from "next/router";
 
 
 export async function getStaticPaths() {
-  let Aname = await (await fetch(`${process.env.API_URL}/.json`)).json(); //fetch data present in database
+  let Aname = await (await fetch(`${process.env.API_URL}/anime/.json`)).json(); //fetch data present in database
 
   Aname = Object.keys(Aname); //convert object into keys array
   let paths = [];
@@ -19,7 +19,7 @@ export async function getStaticPaths() {
     //for loop for formed path for each anime for its all seasons
 
     const data = await (
-      await fetch(`${process.env.API_URL}/${Aname[i]}/season.json`)
+      await fetch(`${process.env.API_URL}/anime/${Aname[i]}/season.json`)
     ).json(); //fetch data for present particular anime all seasons data
 
     const newPaths = data.map((elem, index) => {
@@ -45,13 +45,13 @@ export const getStaticProps = async (context) => {
 
   // console.log(AnimeName)
   let res = await fetch(
-    `${process.env.API_URL}/${AnimeName}/${Season}.json` //fetch data for a particular anime and its season number
+    `${process.env.API_URL}/anime/${AnimeName}/${Season}.json` //fetch data for a particular anime and its season number
   );
   const data = await res.json();
-  let serverEpisodeData = await fetch(`${process.env.API_URL}/${AnimeName}/${Season}ep.json`);
+  let serverEpisodeData = await fetch(`${process.env.API_URL}/anime/${AnimeName}/${Season}ep.json`);
   const serverEpisode = await serverEpisodeData.json();
 
-  let Seasons = await(await fetch(`${process.env.API_URL}/${AnimeName}/season.json`)).json();
+  let Seasons = await(await fetch(`${process.env.API_URL}/anime/${AnimeName}/season.json`)).json();
   return {
     props: {
       data,
@@ -69,7 +69,7 @@ function AnimeName({ data, serverEpisode,Seasons }) {
   let SERVER3 = serverEpisode.server3;
   let SERVER4 = serverEpisode.server4;
   let SERVER5 = serverEpisode.server5;
-console.log(Seasons)
+// console.log(Seasons)
   const [iframe, setiframe] = useState(SERVER1[0]);
   const [videoNumber, setvideoNumber] = useState(1);
   const [Server, setServer] = useState(SERVER1);
@@ -77,7 +77,7 @@ const [ServerName, setServerName] = useState("Server-1")
 
   const print = (no) => {
     setvideoNumber(parseInt(no.current.id));
-    console.log(no.current.id);
+    // console.log(no.current.id);
   };
 
   useEffect(() => {
@@ -94,10 +94,10 @@ const [ServerName, setServerName] = useState("Server-1")
         //travel all card and remove check class
         element.classList.remove("check");
       });
-      console.log(videoNumber);
+      // console.log(videoNumber);
       setvideoNumber(videoNumber - 1);
       setiframe(Server[videoNumber - 2]);
-      console.log(videoNumber);
+      // console.log(videoNumber);
       document
         .getElementsByClassName("card")
         [videoNumber - 2].classList.add("check");
@@ -116,7 +116,7 @@ const [ServerName, setServerName] = useState("Server-1")
       document
         .getElementsByClassName("card")
         [videoNumber].classList.add("check");
-      console.log(videoNumber);
+      // console.log(videoNumber);
     }
   };
 
@@ -173,7 +173,7 @@ const [ServerName, setServerName] = useState("Server-1")
             setServer(SERVER1);
             setiframe(Server[videoNumber-1]);
             setServerName(e.target.innerText)
-            console.log(Server);
+            // console.log(Server);
           }}
         >
           Server-1
@@ -185,7 +185,7 @@ const [ServerName, setServerName] = useState("Server-1")
             setServer(SERVER2);
             setiframe(Server[videoNumber-1]);
             setServerName(e.target.innerText)
-            console.log(Server, iframe);
+            // console.log(Server, iframe);
           }}
         >
           Server-2
@@ -196,7 +196,7 @@ const [ServerName, setServerName] = useState("Server-1")
             setServer(SERVER3);
             setiframe(Server[videoNumber-1]);
             setServerName(e.target.innerText)
-            console.log(Server);
+            // console.log(Server);
           }}
         >
           Server-3
@@ -207,7 +207,7 @@ const [ServerName, setServerName] = useState("Server-1")
             setServer(SERVER4);
             setiframe(Server[videoNumber-1]);
             setServerName(e.target.innerText)
-            console.log(Server);
+            // console.log(Server);
           }}
         >
           Server-4
@@ -218,7 +218,7 @@ const [ServerName, setServerName] = useState("Server-1")
             setServer(SERVER5);
             setiframe(Server[videoNumber-1]);
             setServerName(e.target.innerText)
-            console.log(Server);
+            // console.log(Server);
           }}
         >
           Server-5

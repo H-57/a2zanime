@@ -5,7 +5,7 @@ function SeasonCards(props) {
     <>
     <li className="card">
          
-          <figure><Image src={props.image} alt={props.title} className="thumbnail" width={100} height={100}/>
+          <figure><Image src={props.image} alt={props.title} className="thumbnail" width={200} height={200}/>
             <span className="material-symbols-outlined play">
               play_circle
               </span>
@@ -18,7 +18,7 @@ function SeasonCards(props) {
 /* for define size of video cards */
    .card{
    width: 10rem;
-   height: 12rem;
+   height: 14rem;
    color: aliceblue;
    /* border: solid 1px red; */
    /* margin: 5px; */
@@ -81,8 +81,9 @@ function SeasonCards(props) {
    
    
    top: -58%;
-   left: 32%;
+   left: 36%;
    font-size: 50px!important;
+   width: fit-content;
    }
    
    

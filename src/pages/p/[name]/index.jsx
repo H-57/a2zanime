@@ -8,7 +8,7 @@ export async function getStaticPaths() {
  
     
   let data = await (
-    await fetch(`${process.env.API_URL}/.json`)).json();      //get data for exists all animes                                     
+    await fetch(`${process.env.API_URL}/anime/.json`)).json();      //get data for exists all animes                                     
   data=Object.keys(data)
   
   const paths = data.map((elem) => {                //return present anime pages
@@ -31,7 +31,7 @@ export const getStaticProps = async (context) => {
     const name=context.params.name
     console.log(name)
       let res = await fetch(
-        `${process.env.API_URL}/${name}/season.json` //get data for present animes and thir seasons and show all season cards
+        `${process.env.API_URL}/anime/${name}/season.json` //get data for present animes and thir seasons and show all season cards
       );
       const data = await res.json();
       return {

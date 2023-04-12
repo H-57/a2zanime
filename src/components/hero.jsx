@@ -7,46 +7,48 @@ function Hero() {
       <div id="hero" className="banner">
         <div id="feature">
           <Link href="/p/lookism">
-            <Image className="1stimg"
+            <Image id="1stimg"
               src="https://sm.ign.com/t/ign_in/screenshot/default/lookism_r6n7.1280.jpg"
               alt="lookism"
-            width={503} height={500}
-            />
-            <h2>hello this is title</h2>
+             layout="fill"
+             
+    />
+        
+            <h2 className="episodeno">Lookism All Season </h2>
           </Link>
         </div>
         <div className="slide">
           <div className="sl1" >
             {/* <Link href="/p/pokemon"> */}
-              <Image className="sll"
+              <Image 
                 src="https://hacker57.netlify.app/src/pokemonallseason.png"
-                width={600}
-                height={240}
+                layout="responsive"    width={600}
+                height={340}
                 alt=""
               />
-              <h2>hello this is title1</h2>
+              <h2 className="episodeno">Pokemon All Season</h2>
             {/* </Link> */}
           </div>
           <div className="sl">
             {/* <Link href="/single-page/pokemon-all-movies.html"> */}
               <Image
                 src="https://hacker57.netlify.app/src/pokemonallseason.png"
-                width={400}
-                height={250}
+                layout="responsive"       width={400}
+                height={350}
                 alt=""
               />
-              <h2>hello this is title2</h2>
+              <h2 className="episodeno">Pokemon All Movies</h2>
             {/* </Link> */}
           </div>
           <div className="sl">
             {/* <Link href="/"> */}
               <Image
                 src="https://hacker57.netlify.app/src/pokemonallseason.png"
-                width={400}
-                height={250}
+                layout="responsive"         width={400}
+                height={350}
                 alt=""
               />
-              <h2>hello this is title</h2>
+              <h2 className="episodeno">hello this is title</h2>
             {/* </Link> */}
           </div>
         </div>
@@ -65,36 +67,48 @@ function Hero() {
   position:relative
 
 }
-  .1stimg{
-    object-fit:contain
+#feature Link{
+  display: block;
+height: 87%;
+position: relative;
+}
+  #stimg{
+    height:auto
   }
     .slide {
       display: flex;
       flex-wrap: wrap;
       overflow-y: hidden;
       width:50%;
+      height:auto
     }
    
     .sl1 {
       width: 100%;
-      height: 42%;
+      height: 55%;
       overflow: hidden;
     }
    
     .sl {
-      height: 100%;
+      height: auto;
       width: 50%;
       overflow:hidden
     }
     .banner h2 {
-      color: #120922;
+    
       position: relative;
       bottom: 3rem;
+      color: #0064ff;
+      text-shadow: 0px 2px 3px cyan;
     }
- 
-    @media only screen and (max-width: 400px) {
+    .sl h2{
+      font-size:1.4rem
+    }
+  
+    @media only screen and (max-width: 450px) {
       #hero{
-        flex-direction:coloumn
+        flex-direction:coloumn;
+        height:50%
       }
       .banner {
         flex-wrap: wrap;
@@ -105,19 +119,22 @@ function Hero() {
         flex-direction: column;
         width: 100%;
         overflow-x: scroll;
-        height: 17rem;
+        height: 153px;
       }
       .sl,
       .sl1 {
-        width:auto;
+        width:70%;
         
         height:100%;
       
       }
-      .1stimg{
-       width:auto;
-       position:relative
-      }
+      
+      #feature{
+        width: 100%;
+        height: 35vh;}
+    }
+    #feature h2{
+      position:absolute
     }
       `}</style>
     </>

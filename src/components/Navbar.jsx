@@ -38,7 +38,20 @@ nav{
   text-shadow: 0 0 3px #00ABFF, 0 0 5px #00CFFF;
   cursor: pointer;
   }
-  
+  @media only screen and (max-width: 600px) {
+nav{
+  margin-bottom:50px;
+  flex-wrap: no-wrap;
+ 
+}
+nav ul{
+ margin:20px
+}
+nav ul li{
+  margin-right:10px;
+  font-size:1rem
+}
+  }
 
 `
 

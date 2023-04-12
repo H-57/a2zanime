@@ -16,4 +16,15 @@ body {
       color: aqua;
     }
    
-     
+    .video {
+        
+        display: flex;
+        flex-wrap: wrap;
+      
+        row-gap: 20px;
+        column-gap: 40px;
+    }
+    #video{
+        height: 88%;
+    }
+   
