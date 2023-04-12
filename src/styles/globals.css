@@ -27,4 +27,6 @@ body {
     #video{
         height: 88%;
     }
-   
+    .hide{
+        display:none
+      }

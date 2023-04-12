@@ -131,6 +131,7 @@ const [ServerName, setServerName] = useState("Server-1")
           content={serverEpisode.description}
         />
         <meta name="keywords" content="all anime videos,video,pokemon" />
+        
       </Head>
       <h1>
         {serverEpisode.heading}
@@ -156,9 +157,12 @@ const [ServerName, setServerName] = useState("Server-1")
       </div>
       <div className="seasonlist">
         <button onClick={()=>{
-          document.getElementsByClassName('slist')[0].style.display="block"
-        }} className="listbtn">All Episodes </button>
-        <ul className="slist">
+          document.getElementById('slist').classList.toggle("hide");
+          document.getElementById('licon').classList.toggle("rotate");
+
+        }} className="listbtn">All Episodes <i id="licon" className="fa fa-chevron-down"></i></button>
+      
+        <ul id="slist" className="hide">
         {Seasons.map((elem, index) => {
           return (<Link key={index} href={`/p/${router.query.name}/season${index+1}`}> <li>seaon{index+1}</li></Link>)})}
          
@@ -246,9 +250,14 @@ const [ServerName, setServerName] = useState("Server-1")
       </ul>
       <style jsx>{`
         /* for ul list store all video cards */
-        .show{
-          display:block
-        }
+      .listbtn{
+        background: #6a0c6a;
+font-size: 1rem;
+cursor:pointer;
+      }
+       .rotate{
+        transform: rotate(180deg);
+       }
         .video {
           display: flex;
           flex-wrap: wrap;
@@ -296,23 +305,36 @@ const [ServerName, setServerName] = useState("Server-1")
           flex-direction: column;
         }
         .Sbtn {
+         
           color: black;
           margin: auto;
           background: cornflowerblue;
           border-radius: 5px;
           font-size: 34px;
         }
-       
+       .btn:hover{
+        font-size:larger
+       }
 
-
+.seasonlist{
+  margin-left: 2rem;
+}
         .seasonlist ul{
         
 width: fit-content;
           background: blueviolet;
           font-size: x-large;
           position: relative;
+          
         }
-.slist{display:none}
+        .seasonlist ul li{
+          background: #5e0288;
+          margin-bottom: 5px;
+        }
+        .seasonlist ul li:hover{
+          background:#8b0ac6
+        }
+
         @media only screen and (max-width: 400px) {
           .server {
             display: flex;
@@ -357,11 +379,13 @@ width: fit-content;
           white-space: nowrap;
           cursor: pointer;
           margin-right:20px;
+          margin-bottom: 10px;
         }
        
         .button-63:active,
         .button-63:hover {
           outline: 0;
+          font-size:larger
         }
         
         @media (min-width: 768px) {
