@@ -1,11 +1,11 @@
 import {useRef} from 'react'
 import Image from 'next/image'
+import styled from 'styled-components';
 
-
-function VideoCards(props) {
+function VideoCards({lo1,setiframe,print,number,image,title}) {
 
     const videoNo=useRef(0);
-    let lo2=props.lo1;
+    let lo2=lo1;
  
 
 const vid=()=>{
@@ -13,11 +13,11 @@ let lielm=document.getElementsByClassName('check')
 // console.log(lielm)
     Array.from(lielm).forEach((element) => {                //travel all card and remove check class
         element.classList.remove('check')})
-       props.setiframe(lo2[(videoNo.current.id)-1])
+       setiframe(lo2[(videoNo.current.id)-1])
     videoNo.current.classList.add('check')
     document.getElementById("myFrame").scrollIntoView();
     
-        props.print(videoNo)
+        print(videoNo)
     
 }
 
@@ -25,16 +25,17 @@ let lielm=document.getElementsByClassName('check')
   return (
    <>
   
-    <li ref={videoNo} className="card" onClick={vid} id={props.number+1} >
+    <li ref={videoNo} className="card" onClick={vid} id={number+1} >
     
-<figure><Image src={props.image} alt={props.title} className="thumbnail" width={150} height={20}/></figure>
+<figure><Image src={image} alt={title} className="thumbnail" width={150} height={20}/></figure>
 
-<span className="epnumber">Episode {props.number +1}</span>
-<header><h3> {props.title}</h3></header>
+<span className="epnumber">Episode {number +1}</span>
+<header><h3> {title}</h3></header>
 <span className="material-symbols-outlined play">
  play_circle
  </span>
 </li>
+
 <style jsx>{`
 /* for define size of video cards */
 .card {
