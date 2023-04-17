@@ -20,7 +20,7 @@ export async function getStaticPaths() {
       const data = await (
         await fetch(`${process.env.API_URL}/movie/${Aname[i]}/movie.json`)
       ).json(); //fetch data for present particular anime all seasons data
-  
+     
       const newPaths = data.map((elem, index) => {
         //return s complete path for static pages
   
@@ -51,20 +51,21 @@ export const getStaticProps = async (context) => {
   const data = await res.json();
   let serverEpisodeData = await fetch(`${process.env.API_URL}/movie/${AnimeName}/${Movie}.json`);
   const serverEpisode = await serverEpisodeData.json();
-
+  let Sbutton = await(await fetch(`${process.env.API_URL}/movie/${AnimeName}/movie1.json`)).json();
   let Movies = await(await fetch(`${process.env.API_URL}/movie/${AnimeName}/movie.json`)).json();
   return {
     props: {
       data,
       serverEpisode,
       Movies,
+      Sbutton,
     },
   };
 };
 
-function AnimeName({ serverEpisode,Movies }) {
+function AnimeName({ serverEpisode,Movies,Sbutton }) {
   const router = useRouter();
-  
+  let SbuttonArray=Object.keys(Sbutton);
   let SERVER1 = serverEpisode.server1;
   let SERVER2 = serverEpisode.server2;
   let SERVER3 = serverEpisode.server3;
@@ -78,7 +79,50 @@ function AnimeName({ serverEpisode,Movies }) {
 const [ServerName, setServerName] = useState("Server-1")
 
   
- 
+const lang=(index)=>{
+  switch (index) {
+    case 0:
+     return  Sbutton.server1.language;
+     
+    case 1:
+      return  Sbutton.server2.language;
+     
+    case 2:
+      return  Sbutton.server3.language;
+     
+    case 3:
+     return   Sbutton.server4.language;
+     
+    case 4:
+     return   Sbutton.server5.language;
+     
+
+  }
+}
+const SERVER=(index)=>{
+  switch (index) {
+    case 0:
+      return SERVER1
+    case 1:
+      return SERVER2
+    case 2:
+      return SERVER3
+    case 3:
+      return SERVER4
+    case 4:
+      return SERVER5
+  
+    
+  }
+}
+
+const ServerChange=(e,index) => {
+
+  setServer(SERVER(index));
+  setiframe(Server[0]);
+  setServerName(e.target.innerText)
+  // console.log(serverNo);
+}
 
 
   return (
@@ -124,62 +168,16 @@ const [ServerName, setServerName] = useState("Server-1")
         </div>
       <div id="episodeno">  ({ServerName})</div>
       <div className="server">
-        <button
+      {SbuttonArray.map((elem,index)=>{
+          return(
+<button key={elem}
           className="button-63 "
-          onClick={(e) => {
-            setServer(SERVER1);
-            setiframe(Server[videoNumber-1]);
-            setServerName(e.target.innerText)
-            // console.log(Server);
-          }}
+          onClick={(e)=>{ServerChange(e,index)}}
         >
-          Server-1
+          Server-{index+1} ({lang(index) })
         </button>
-
-        <button
-          className="button-63 "
-          onClick={(e) => {
-            setServer(SERVER2);
-            setiframe(Server[videoNumber-1]);
-            setServerName(e.target.innerText)
-            // console.log(Server, iframe);
-          }}
-        >
-          Server-2
-        </button>
-        <button
-          className="button-63 "
-          onClick={(e) => {
-            setServer(SERVER3);
-            setiframe(Server[videoNumber-1]);
-            setServerName(e.target.innerText)
-            // console.log(Server);
-          }}
-        >
-          Server-3
-        </button>
-        <button
-          className="button-63 "
-          onClick={(e) => {
-            setServer(SERVER4);
-            setiframe(Server[videoNumber-1]);
-            setServerName(e.target.innerText)
-            // console.log(Server);
-          }}
-        >
-          Server-4
-        </button>
-        <button
-          className="button-63 "
-          onClick={(e) => {
-            setServer(SERVER5);
-            setiframe(Server[videoNumber-1]);
-            setServerName(e.target.innerText)
-            // console.log(Server);
-          }}
-        >
-          Server-5
-        </button>
+          )
+        })}
       </div>
 
       <h2>
