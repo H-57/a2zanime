@@ -270,6 +270,7 @@ const ServerChange=(e,index) => {
         background: #6a0c6a;
 font-size: 1rem;
 cursor:pointer;
+height: 3rem;
       }
        .rotate{
         transform: rotate(180deg);
