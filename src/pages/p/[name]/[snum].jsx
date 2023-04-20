@@ -69,11 +69,10 @@ function AnimeName({ data, serverEpisode,Seasons,Sbutton }) {
   let lo1 = serverEpisode.server1;
  
   let SERVER1 = serverEpisode.server1;
-  let SERVER2 = serverEpisode.server2;
-  let SERVER3 = serverEpisode.server3;
-  let SERVER4 = serverEpisode.server4;
-  let SERVER5 = serverEpisode.server5;
-
+  let SERVER2;
+  let SERVER3;
+  let SERVER4;
+  let SERVER5;
  
   
 
@@ -123,12 +122,16 @@ const SERVER=(index)=>{
     case 0:
       return SERVER1
     case 1:
+      SERVER2= serverEpisode.server2;
       return SERVER2
     case 2:
+      SERVER3= serverEpisode.server3;
       return SERVER3
     case 3:
+      SERVER4= serverEpisode.server4;
       return SERVER4
     case 4:
+      SERVER5= serverEpisode.server5;
       return SERVER5
   
     
