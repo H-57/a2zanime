@@ -52,7 +52,8 @@ export const getStaticProps = async (context) => {
   const serverEpisode = await serverEpisodeData.json();
 
   let Seasons = await(await fetch(`${process.env.API_URL}/anime/${AnimeName}/season.json`)).json();
-  let Sbutton = await(await fetch(`${process.env.API_URL}/anime/${AnimeName}/season1ep.json`)).json();
+  let Sbutton = await(await fetch(`${process.env.API_URL}/anime/${AnimeName}/${Season}ep.json`)).json();
+  let Content = await(await fetch(`${process.env.API_URL}/anime/${AnimeName}/${Season}Content.json`)).json();
   
   return {
     props: {
@@ -60,11 +61,12 @@ export const getStaticProps = async (context) => {
       serverEpisode,
       Seasons,
       Sbutton,
+      Content,
     },
   };
 };
 
-function AnimeName({ data, serverEpisode,Seasons,Sbutton }) {
+function AnimeName({ data, serverEpisode,Seasons,Sbutton,Content }) {
   const router = useRouter();
   let lo1 = serverEpisode.server1;
  
@@ -183,17 +185,17 @@ const ServerChange=(e,index) => {
     <>
       <Head>
         <title>
-          {serverEpisode.title}
+          {Content.title}
         </title>
         <meta
           name="description"
-          content={serverEpisode.description}
+          content={Content.description}
         />
         <meta name="keywords" content="all anime videos,video,pokemon" />
         
       </Head>
       <h1>
-        {serverEpisode.heading}
+        {Content.heading1}
       </h1>
       <div style={{ height: "400px" }}>
         <iframe
@@ -246,7 +248,7 @@ const ServerChange=(e,index) => {
       </div>
 
       <h2>
-       {serverEpisode.heading2}
+       {Content.heading2}
       </h2>
 
       <ul id="video" className="video">
