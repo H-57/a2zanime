@@ -21,6 +21,7 @@ export default function Home({series,movies}) {
     <>
       <Hero />
       <ul id="video" className="video">
+      <h2 style={{width:"100vw"}} >Series</h2>
                 {series.map((elem, index) => {
                   
                   return <Link key={index} href={elem.url}> 
@@ -28,7 +29,7 @@ export default function Home({series,movies}) {
                   </Link>
                 })}
 
-<h2>Movies</h2>
+<h2 style={{width:"100vw"}} >Movies</h2>
 
 {movies.map((elem, index) => {
                   

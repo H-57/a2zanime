@@ -221,7 +221,7 @@ const ServerChange=(e,index) => {
           document.getElementById('slist').classList.toggle("hide");
           document.getElementById('licon').classList.toggle("rotate");
 
-        }} className="listbtn">All Episodes <i id="licon" className="fa fa-chevron-down"></i></button>
+        }} className="listbtn">All Seasons <i id="licon" className="fa fa-chevron-down"></i></button>
       
         <ul id="slist" className="hide">
         {Seasons.map((elem, index) => {
