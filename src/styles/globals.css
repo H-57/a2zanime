@@ -8,7 +8,7 @@ body {
 }
 
 
-      #episodeno { font-size: 2rem;
+      #episodeno,.neonheading { font-size: 2rem;
       margin: auto;
       display: block;
       width: fit-content;
