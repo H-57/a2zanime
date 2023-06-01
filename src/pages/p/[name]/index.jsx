@@ -1,7 +1,7 @@
 import SeasonCards from "../../../components/seasonCards";
 import Link from "next/link";
 import {useRouter} from "next/router";
-
+import Head from "next/head";
 
 
 export async function getStaticPaths() {
@@ -50,7 +50,13 @@ export const getStaticProps = async (context) => {
         
           return (
             <>
-          
+           <Head>
+           <title>Azanime - Best Source For Hindi Anime &amp; Cartoons</title>
+
+<meta name="description" content="Best Source For Hindi Anime &amp; Cartoons" />
+        <meta name="keywords" content="all anime videos,video,pokemon" />
+        
+      </Head>
              
               <ul id="video" className="video">
                 {data.map((elem, index) => {
