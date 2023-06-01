@@ -7,11 +7,11 @@ function Navbar() {
     <><nav>
      <ul>
 
-<Link href="/"><li>Home</li></Link>
-<Link href="/p/pokemon/season1"><li>Anime</li></Link>
-<Link href="/p/Allseason"><li>Sitemap</li></Link>
-<Link href="/about"><li>About</li></Link>
-<Link href="/"><li>Contact</li></Link>
+<li><Link href="/">Home</Link></li>
+<li><Link href="/p/pokemon/season1">Anime</Link></li>
+<li><Link href="/p/Allseason">Sitemap</Link></li>
+<li><Link href="/about">About</Link></li>
+<li><Link href="/">Contact</Link></li>
 </ul>
 </nav>
 <Image className='navimg' src="https://hacker57.netlify.com/src/navbar.gif" alt="navbar image"  width="50" height="50"/>

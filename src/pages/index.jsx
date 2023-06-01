@@ -1,6 +1,7 @@
 import Hero from "../components/hero";
 import Link from "next/link";
 import SeasonCards from "../components/seasonCards"
+import Head from "next/head";
 
 export const getServerSideProps = async () => {
   let series = await ( await fetch(`${process.env.API_URL}/home/series.json`)).json();
@@ -19,6 +20,11 @@ export const getServerSideProps = async () => {
 export default function Home({series,movies}) {
   return (
     <>
+    <Head>
+    <title>A2zanime - Best Source For Hindi Anime &amp; Cartoons</title>
+
+<meta name="description" content="Best Source For Hindi Anime &amp; Cartoons" />
+    </Head>
       <Hero />
       <ul id="video" className="video">
       <h2 style={{width:"100vw"}} className="neonheading">Series</h2>

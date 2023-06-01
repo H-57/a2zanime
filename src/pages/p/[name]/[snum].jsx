@@ -1,12 +1,8 @@
-import VideoCards from "../../../components/VideoCards";
-import { useState, useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
-import {useRouter} from "next/router";
-
-
-
-
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import VideoCards from "../../../components/VideoCards";
 
 export async function getStaticPaths() {
   let Aname = await (await fetch(`${process.env.API_URL}/anime/.json`)).json(); //fetch data present in database
@@ -22,7 +18,7 @@ export async function getStaticPaths() {
       await fetch(`${process.env.API_URL}/anime/${Aname[i]}/season.json`)
     ).json(); //fetch data for present particular anime all seasons data
 
-    const newPaths = data.map((elem, index) => {
+    const newPaths = data.map((_elem, index) => {
       //return s complete path for static pages
 
       return {
@@ -48,13 +44,23 @@ export const getStaticProps = async (context) => {
     `${process.env.API_URL}/anime/${AnimeName}/${Season}.json` //fetch data for a particular anime and its season number
   );
   const data = await res.json();
-  let serverEpisodeData = await fetch(`${process.env.API_URL}/anime/${AnimeName}/${Season}ep.json`);
+  let serverEpisodeData = await fetch(
+    `${process.env.API_URL}/anime/${AnimeName}/${Season}ep.json`
+  );
   const serverEpisode = await serverEpisodeData.json();
 
-  let Seasons = await(await fetch(`${process.env.API_URL}/anime/${AnimeName}/season.json`)).json();
-  let Sbutton = await(await fetch(`${process.env.API_URL}/anime/${AnimeName}/${Season}ep.json`)).json();
-  let Content = await(await fetch(`${process.env.API_URL}/anime/${AnimeName}/${Season}Content.json`)).json();
-  
+  let Seasons = await (
+    await fetch(`${process.env.API_URL}/anime/${AnimeName}/season.json`)
+  ).json();
+  let Sbutton = await (
+    await fetch(`${process.env.API_URL}/anime/${AnimeName}/${Season}ep.json`)
+  ).json();
+  let Content = await (
+    await fetch(
+      `${process.env.API_URL}/anime/${AnimeName}/${Season}Content.json`
+    )
+  ).json();
+
   return {
     props: {
       data,
@@ -66,28 +72,22 @@ export const getStaticProps = async (context) => {
   };
 };
 
-function AnimeName({ data, serverEpisode,Seasons,Sbutton,Content }) {
+function AnimeName({ data, serverEpisode, Seasons, Sbutton, Content }) {
   const router = useRouter();
-  let lo1 = serverEpisode.server1;
- 
+
   let SERVER1 = serverEpisode.server1;
   let SERVER2;
   let SERVER3;
   let SERVER4;
   let SERVER5;
- 
-  
 
-
- 
-// console.log(Seasons)
+  // console.log(Seasons)
   const [iframe, setiframe] = useState(SERVER1[0]);
   const [videoNumber, setvideoNumber] = useState(1);
   const [Server, setServer] = useState(SERVER1);
-const [ServerName, setServerName] = useState("Server-1")
+  const [ServerName, setServerName] = useState("Server-1");
 
-
-let SbuttonArray=Object.keys(Sbutton);
+  let SbuttonArray = Object.keys(Sbutton);
   const print = (no) => {
     setvideoNumber(parseInt(no.current.id));
     // console.log(no.current.id);
@@ -99,54 +99,49 @@ let SbuttonArray=Object.keys(Sbutton);
       [videoNumber - 1].classList.add("check");
   }, []);
 
-const lang=(index)=>{
-  switch (index) {
-    case 0:
-     return  Sbutton.server1.language;
-     
-    case 1:
-      return  Sbutton.server2.language;
-     
-    case 2:
-      return  Sbutton.server3.language;
-     
-    case 3:
-     return   Sbutton.server4.language;
-     
-    case 4:
-     return   Sbutton.server5.language;
-     
+  const lang = (index) => {
+    switch (index) {
+      case 0:
+        return Sbutton.server1.language;
 
-  }
-}
-const SERVER=(index)=>{
-  switch (index) {
-    case 0:
-      return SERVER1
-    case 1:
-      SERVER2= serverEpisode.server2;
-      return SERVER2
-    case 2:
-      SERVER3= serverEpisode.server3;
-      return SERVER3
-    case 3:
-      SERVER4= serverEpisode.server4;
-      return SERVER4
-    case 4:
-      SERVER5= serverEpisode.server5;
-      return SERVER5
-  
-    
-  }
-}
+      case 1:
+        return Sbutton.server2.language;
 
-const ServerChange=(e,index) => {
+      case 2:
+        return Sbutton.server3.language;
 
-  setServer(SERVER(index));
-  setiframe(Server[videoNumber-1]);
-  setServerName(e.target.innerText)
-  // console.log(serverNo);
-}
+      case 3:
+        return Sbutton.server4.language;
+
+      case 4:
+        return Sbutton.server5.language;
+    }
+  };
+  const SERVER = (index) => {
+    switch (index) {
+      case 0:
+        return SERVER1;
+      case 1:
+        SERVER2 = serverEpisode.server2;
+        return SERVER2;
+      case 2:
+        SERVER3 = serverEpisode.server3;
+        return SERVER3;
+      case 3:
+        SERVER4 = serverEpisode.server4;
+        return SERVER4;
+      case 4:
+        SERVER5 = serverEpisode.server5;
+        return SERVER5;
+    }
+  };
+
+  const ServerChange = (e, index) => {
+    setServer(SERVER(index));
+    setiframe(Server[videoNumber - 1]);
+    setServerName(e.target.innerText);
+    // console.log(serverNo);
+  };
   const handelBack = () => {
     if (videoNumber >= 2) {
       let lielm = document.getElementsByClassName("check");
@@ -184,19 +179,11 @@ const ServerChange=(e,index) => {
   return (
     <>
       <Head>
-        <title>
-          {Content.title}
-        </title>
-        <meta
-          name="description"
-          content={Content.description}
-        />
+        <title>{Content.title}</title>
+        <meta name="description" content={Content.description} />
         <meta name="keywords" content="all anime videos,video,pokemon" />
-        
       </Head>
-      <h1>
-        {Content.heading1}
-      </h1>
+      <h1>{Content.heading1}</h1>
       <div style={{ height: "400px" }}>
         <iframe
           allowFullScreen={true}
@@ -211,50 +198,61 @@ const ServerChange=(e,index) => {
         <button onClick={handelBack} className="btn ">
           back
         </button>
-        
+
         <button onClick={handelNext} className="btn ">
           next
         </button>
       </div>
       <div className="seasonlist">
-        <button onClick={()=>{
-          document.getElementById('slist').classList.toggle("hide");
-          document.getElementById('licon').classList.toggle("rotate");
-
-        }} className="listbtn">All Seasons <i id="licon" className="fa fa-chevron-down"></i></button>
-      
-        <ul id="slist" className="hide">
-        {Seasons.map((elem, index) => {
-          return (<Link key={index} href={`/p/${router.query.name}/season${index+1}`}> <li>seaon{index+1}</li></Link>)})}
-         
-        
-        </ul>
-        </div>
-      <div id="episodeno">Episode {videoNumber}  ({ServerName})</div>
-      <div className="server">
-
-        {SbuttonArray.map((elem,index)=>{
-          return(
-<button key={elem}
-          className="button-63 "
-          onClick={(e)=>{ServerChange(e,index)}}
+        <button
+          onClick={() => {
+            document.getElementById("slist").classList.toggle("hide");
+            document.getElementById("licon").classList.toggle("rotate");
+          }}
+          className="listbtn"
         >
-          Server-{index+1} ({lang(index) })
+          All Seasons <i id="licon" className="fa fa-chevron-down"></i>
         </button>
-          )
-        })}
-      
 
+        <ul id="slist" className="hide">
+          {Seasons.map((_elem, index) => {
+            return (
+              <Link
+                key={index}
+                href={`/p/${router.query.name}/season${index + 1}`}
+              >
+                {" "}
+                <li>seaon{index + 1}</li>
+              </Link>
+            );
+          })}
+        </ul>
+      </div>
+      <div id="episodeno">
+        Episode {videoNumber} ({ServerName})
+      </div>
+      <div className="server">
+        {SbuttonArray.map((elem, index) => {
+          return (
+            <button
+              key={elem}
+              className="button-63 "
+              onClick={(e) => {
+                ServerChange(e, index);
+              }}
+            >
+              Server-{index + 1} ({lang(index)})
+            </button>
+          );
+        })}
       </div>
 
-      <h2>
-       {Content.heading2}
-      </h2>
+      <h2>{Content.heading2}</h2>
 
       <ul id="video" className="video">
         {data.map((elem, index) => {
           return (
-            <VideoCards 
+            <VideoCards
               setiframe={setiframe}
               print={print}
               lo1={Server}
@@ -268,15 +266,15 @@ const ServerChange=(e,index) => {
       </ul>
       <style jsx>{`
         /* for ul list store all video cards */
-      .listbtn{
-        background: #6a0c6a;
-font-size: 1rem;
-cursor:pointer;
-height: 3rem;
-      }
-       .rotate{
-        transform: rotate(180deg);
-       }
+        .listbtn {
+          background: #6a0c6a;
+          font-size: 1rem;
+          cursor: pointer;
+          height: 3rem;
+        }
+        .rotate {
+          transform: rotate(180deg);
+        }
         .video {
           display: flex;
           flex-wrap: wrap;
@@ -324,34 +322,31 @@ height: 3rem;
           flex-direction: column;
         }
         .Sbtn {
-         
           color: black;
           margin: auto;
           background: cornflowerblue;
           border-radius: 5px;
           font-size: 34px;
         }
-       .btn:hover{
-        font-size:larger
-       }
+        .btn:hover {
+          font-size: larger;
+        }
 
-.seasonlist{
-  margin-left: 2rem;
-}
-        .seasonlist ul{
-        
-width: fit-content;
+        .seasonlist {
+          margin-left: 2rem;
+        }
+        .seasonlist ul {
+          width: fit-content;
           background: blueviolet;
           font-size: x-large;
           position: relative;
-          
         }
-        .seasonlist ul li{
+        .seasonlist ul li {
           background: #5e0288;
           margin-bottom: 5px;
         }
-        .seasonlist ul li:hover{
-          background:#8b0ac6
+        .seasonlist ul li:hover {
+          background: #8b0ac6;
         }
 
         @media only screen and (max-width: 400px) {
@@ -373,16 +368,20 @@ width: fit-content;
         }
 
         .button-63 {
-          margin:auto;
-        
-         
+          margin: auto;
+
           align-items: center;
-          background-image: linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB);
+          background-image: linear-gradient(
+            144deg,
+            #af40ff,
+            #5b42f3 50%,
+            #00ddeb
+          );
           border: 0;
           border-radius: 50px;
           box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
           box-sizing: border-box;
-          color: #FFFFFF;
+          color: #ffffff;
           display: flex;
           font-family: Phantomsans, sans-serif;
           font-size: 20px;
@@ -397,19 +396,19 @@ width: fit-content;
           touch-action: manipulation;
           white-space: nowrap;
           cursor: pointer;
-          margin-right:20px;
+          margin-right: 20px;
           margin-bottom: 10px;
         }
-       
+
         .button-63:active,
         .button-63:hover {
           outline: 0;
-          font-size:larger
+          font-size: larger;
         }
-        
+
         @media (min-width: 768px) {
           .button-63 {
-            margin-right:20px;
+            margin-right: 20px;
             font-size: 1.5rem;
             min-width: 196px;
           }
