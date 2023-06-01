@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+
+
+<url>
+  <loc>https://a2zanime.vercel.app/</loc>
+  <lastmod>2023-06-01T04:41:12+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://a2zanime.vercel.app/p/pokemon/season1</loc>
+  <lastmod>2023-06-01T04:41:12+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://a2zanime.vercel.app/about</loc>
+  <lastmod>2023-06-01T04:41:12+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://a2zanime.vercel.app/p/lookism</loc>
+  <lastmod>2023-06-01T04:41:12+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://a2zanime.vercel.app/p/pokemon/season2</loc>
+  <lastmod>2023-06-01T04:41:12+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://a2zanime.vercel.app/p/pokemon/season3</loc>
+  <lastmod>2023-06-01T04:41:12+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://a2zanime.vercel.app/p/lookism/season1</loc>
+  <lastmod>2023-06-01T04:41:12+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://a2zanime.vercel.app/m/pokemon/movie1</loc>
+  <lastmod>2023-06-01T04:41:12+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://a2zanime.vercel.app/m/pokemon/movie2</loc>
+  <lastmod>2023-06-01T04:41:12+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://a2zanime.vercel.app/m/pokemon/movie3</loc>
+  <lastmod>2023-06-01T04:41:12+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+
+
+</urlset>
