@@ -98,6 +98,18 @@ const {videoNo,setVideoNo}=useContext(VideoNoContext)
       [0].classList.add("check");
   }, []);
 
+  useEffect(()=>{
+  
+    setIframe(Server[videoNo ]);
+    
+  },[Server,videoNo])
+
+
+
+
+
+
+
   const lang = (index) => {
     switch (index) {
       case 0:
@@ -137,8 +149,7 @@ const {videoNo,setVideoNo}=useContext(VideoNoContext)
 
   const ServerChange = (e, index) => {
     setServer(SERVER(index));
-    setIframe(Server[videoNo - 1]);
-    setServerName(e.target.innerText);
+    setServerName(e.target.innerText)
     // console.log(serverNo);
   };
   const handelBack = () => {
@@ -149,24 +160,26 @@ const {videoNo,setVideoNo}=useContext(VideoNoContext)
         //travel all card and remove check class
         element.classList.remove("check");
       });
+
+      document
+      .getElementsByClassName("card")
+      [videoNo-1].classList.add("check");
       // console.log(videoNumber);
       setVideoNo(videoNo - 1);
-      setIframe(Server[videoNo]);
+      
       // console.log(videoNumber);
-      document
-        .getElementsByClassName("card")
-        [videoNo].classList.add("check");
+     
     
   };
   const handelNext = () => {
-    if (videoNo != data.length) {
+    if (videoNo != data.length-1) {
       let lielm = document.getElementsByClassName("check");
       // console.log(lielm)
       Array.from(lielm).forEach((element) => {
         //travel all card and remove check class
         element.classList.remove("check");
       });
-      setIframe(Server[videoNo]);
+     
       setVideoNo(videoNo + 1);
       document
         .getElementsByClassName("card")
@@ -216,12 +229,12 @@ const {videoNo,setVideoNo}=useContext(VideoNoContext)
         <ul id="slist" className="hide">
           {Seasons.map((_elem, index) => {
             return (
-              <Link
+              <Link 
                 key={index}
                 href={`/p/${router.query.name}/season${index + 1}`}
               >
                 {" "}
-                <li>seaon{index + 1}</li>
+                <li >seaon{index + 1}</li>
               </Link>
             );
           })}

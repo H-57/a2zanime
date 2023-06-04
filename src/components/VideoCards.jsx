@@ -1,11 +1,15 @@
-import {useRef,useContext} from 'react'
+import {useRef,useContext, useEffect} from 'react'
 import Image from 'next/image'
 import{IframeContext,VideoNoContext}from'../context/videoData'
 
 function VideoCards({videoUrl,number,image,title}) {
 const {setIframe,iframe}=useContext(IframeContext);
 const {videoNo,setVideoNo}=useContext(VideoNoContext)
-  
+  useEffect(()=>{
+   
+    setIframe(videoUrl[(videoNo)])
+  },[videoNo])
+
    const playCard = useRef();
  
 
@@ -14,11 +18,11 @@ let liElements=document.getElementsByClassName('check')
 // console.log(liElements)
     Array.from(liElements).forEach((element) => {                //travel all card and remove check class
         element.classList.remove('check')})
-        console.log("click on card before",videoNo)
+        
         setVideoNo(number)
-        console.log("click on card after update",videoNo)
-       setIframe(videoUrl[(videoNo)])
-       console.log("click on card after iframe update",iframe,videoNo)
+       
+      
+       
        playCard.current.classList.add('check')
     document.getElementById("myFrame").scrollIntoView();
     
