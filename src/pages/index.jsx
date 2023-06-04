@@ -33,15 +33,6 @@ export default function Home({ series, movies }) {
       </Head>
       <Hero />
       <ul id="video" className="video">
-<<<<<<< HEAD
-      <h2 style={{width:"100vw"}} className="neonheading">Series</h2>
-                {series.map((elem, index) => {
-                  
-                  return <Link  key={index}href={elem.url}> 
-                  <SeasonCards   title={elem.title} image={elem.image}  />
-                  </Link>
-                })}
-=======
         <h2 style={{ width: "100vw" }} className="neonheading">
           Series
         </h2>
@@ -54,23 +45,11 @@ export default function Home({ series, movies }) {
            
           );
         })}
->>>>>>> contextapiUse
 
         <h2 style={{ width: "100vw" }} className="neonheading">
           Movies
         </h2>
 
-<<<<<<< HEAD
-{movies.map((elem, index) => {
-                  
-                  return  <Link  key={index} href={elem.url}> 
-                  <SeasonCards   title={elem.title} image={elem.image}  />
-                  </Link>
-                })}
-
-              </ul>
-      
-=======
         {movies.map((elem, index) => {
           return(
        
@@ -80,7 +59,6 @@ export default function Home({ series, movies }) {
           )
         })}
       </ul>
->>>>>>> contextapiUse
     </>
   );
 }

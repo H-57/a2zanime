@@ -26,11 +26,6 @@ let liElements=document.getElementsByClassName('check')
        playCard.current.classList.add('check')
     document.getElementById("myFrame").scrollIntoView();
     
-<<<<<<< HEAD
-        print(videoNo)
-        setVideo()
-=======
->>>>>>> contextapiUse
     
 }
 
