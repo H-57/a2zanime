@@ -4,7 +4,7 @@ import '@/styles/home.css'
 import type { AppProps } from 'next/app'
 import Navbar from '@/components/Navbar'
 import Head from 'next/head'
-import VideoProvider from '../context/videoNo'
+import VideoProvider from '../context/videoData'
 export default function App({ Component, pageProps }: AppProps) {
   return <>
   

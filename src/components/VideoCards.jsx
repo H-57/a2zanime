@@ -1,23 +1,27 @@
-import {useRef} from 'react'
+import {useRef,useContext} from 'react'
 import Image from 'next/image'
-import styled from 'styled-components';
+import{IframeContext,VideoNoContext}from'../context/videoData'
 
-function VideoCards({lo1,setiframe,print,number,image,title}) {
-
-    const videoNo=useRef(0);
-    let lo2=lo1;
+function VideoCards({videoUrl,number,image,title}) {
+const {setIframe,iframe}=useContext(IframeContext);
+const {videoNo,setVideoNo}=useContext(VideoNoContext)
+  
+   const playCard = useRef();
  
 
 const vid=()=>{
-let lielm=document.getElementsByClassName('check')
-// console.log(lielm)
-    Array.from(lielm).forEach((element) => {                //travel all card and remove check class
+let liElements=document.getElementsByClassName('check')
+// console.log(liElements)
+    Array.from(liElements).forEach((element) => {                //travel all card and remove check class
         element.classList.remove('check')})
-       setiframe(lo2[(videoNo.current.id)-1])
-    videoNo.current.classList.add('check')
+        console.log("click on card before",videoNo)
+        setVideoNo(number)
+        console.log("click on card after update",videoNo)
+       setIframe(videoUrl[(videoNo)])
+       console.log("click on card after iframe update",iframe,videoNo)
+       playCard.current.classList.add('check')
     document.getElementById("myFrame").scrollIntoView();
     
-        print(videoNo)
     
 }
 
@@ -25,7 +29,7 @@ let lielm=document.getElementsByClassName('check')
   return (
    <>
   
-    <li ref={videoNo} className="card" onClick={vid} id={number+1} >
+    <li ref={playCard} className="card" onClick={vid} id={number+1} >
     
 <figure><Image src={image} alt={title} className="thumbnail" width={150} height={20}/></figure>
 

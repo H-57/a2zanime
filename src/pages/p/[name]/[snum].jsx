@@ -1,8 +1,9 @@
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import VideoCards from "../../../components/VideoCards";
+import{IframeContext,VideoNoContext}from'../../../context/videoData'
 
 export async function getStaticPaths() {
   let Aname = await (await fetch(`${process.env.API_URL}/anime/.json`)).json(); //fetch data present in database
@@ -74,7 +75,8 @@ export const getStaticProps = async (context) => {
 
 function AnimeName({ data, serverEpisode, Seasons, Sbutton, Content }) {
   const router = useRouter();
-
+const{iframe,setIframe}=useContext(IframeContext)
+const {videoNo,setVideoNo}=useContext(VideoNoContext)
   let SERVER1 = serverEpisode.server1;
   let SERVER2;
   let SERVER3;
@@ -82,21 +84,18 @@ function AnimeName({ data, serverEpisode, Seasons, Sbutton, Content }) {
   let SERVER5;
 
   // console.log(Seasons)
-  const [iframe, setiframe] = useState(SERVER1[0]);
-  const [videoNumber, setvideoNumber] = useState(1);
+
+  
   const [Server, setServer] = useState(SERVER1);
   const [ServerName, setServerName] = useState("Server-1");
 
   let SbuttonArray = Object.keys(Sbutton);
-  const print = (no) => {
-    setvideoNumber(parseInt(no.current.id));
-    // console.log(no.current.id);
-  };
+ 
 
   useEffect(() => {
-    document
-      .getElementsByClassName("card")
-      [videoNumber - 1].classList.add("check");
+    setIframe(SERVER1[0]);
+    document.getElementsByClassName("card")
+      [0].classList.add("check");
   }, []);
 
   const lang = (index) => {
@@ -138,12 +137,12 @@ function AnimeName({ data, serverEpisode, Seasons, Sbutton, Content }) {
 
   const ServerChange = (e, index) => {
     setServer(SERVER(index));
-    setiframe(Server[videoNumber - 1]);
+    setIframe(Server[videoNo - 1]);
     setServerName(e.target.innerText);
     // console.log(serverNo);
   };
   const handelBack = () => {
-    if (videoNumber >= 2) {
+    if (videoNo<=0)return false; 
       let lielm = document.getElementsByClassName("check");
       // console.log(lielm)
       Array.from(lielm).forEach((element) => {
@@ -151,27 +150,27 @@ function AnimeName({ data, serverEpisode, Seasons, Sbutton, Content }) {
         element.classList.remove("check");
       });
       // console.log(videoNumber);
-      setvideoNumber(videoNumber - 1);
-      setiframe(Server[videoNumber - 2]);
+      setVideoNo(videoNo - 1);
+      setIframe(Server[videoNo]);
       // console.log(videoNumber);
       document
         .getElementsByClassName("card")
-        [videoNumber - 2].classList.add("check");
-    }
+        [videoNo].classList.add("check");
+    
   };
   const handelNext = () => {
-    if (videoNumber != data.length) {
+    if (videoNo != data.length) {
       let lielm = document.getElementsByClassName("check");
       // console.log(lielm)
       Array.from(lielm).forEach((element) => {
         //travel all card and remove check class
         element.classList.remove("check");
       });
-      setiframe(Server[videoNumber]);
-      setvideoNumber(videoNumber + 1);
+      setIframe(Server[videoNo]);
+      setVideoNo(videoNo + 1);
       document
         .getElementsByClassName("card")
-        [videoNumber].classList.add("check");
+        [videoNo+1].classList.add("check");
       // console.log(videoNumber);
     }
   };
@@ -229,7 +228,7 @@ function AnimeName({ data, serverEpisode, Seasons, Sbutton, Content }) {
         </ul>
       </div>
       <div id="episodeno">
-        Episode {videoNumber} ({ServerName})
+        Episode {videoNo+1} ({ServerName})
       </div>
       <div className="server">
         {SbuttonArray.map((elem, index) => {
@@ -253,9 +252,8 @@ function AnimeName({ data, serverEpisode, Seasons, Sbutton, Content }) {
         {data.map((elem, index) => {
           return (
             <VideoCards
-              setiframe={setiframe}
-              print={print}
-              lo1={Server}
+              
+              videoUrl={Server}
               key={index}
               title={elem.title}
               image={elem.image}
