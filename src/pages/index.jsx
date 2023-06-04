@@ -30,18 +30,18 @@ export default function Home({series,movies}) {
       <h2 style={{width:"100vw"}} className="neonheading">Series</h2>
                 {series.map((elem, index) => {
                   
-                  return <li key={index} ><Link href={elem.url}> 
+                  return <Link  key={index}href={elem.url}> 
                   <SeasonCards   title={elem.title} image={elem.image}  />
-                  </Link></li>
+                  </Link>
                 })}
 
 <h2 style={{width:"100vw"}} className="neonheading">Movies</h2>
 
 {movies.map((elem, index) => {
                   
-                  return  <li key={index} ><Link  href={elem.url}> 
+                  return  <Link  key={index} href={elem.url}> 
                   <SeasonCards   title={elem.title} image={elem.image}  />
-                  </Link></li>
+                  </Link>
                 })}
 
               </ul>

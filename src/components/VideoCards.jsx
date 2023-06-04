@@ -18,9 +18,13 @@ let lielm=document.getElementsByClassName('check')
     document.getElementById("myFrame").scrollIntoView();
     
         print(videoNo)
+        setVideo()
     
 }
 
+const setVideo=()=>{
+    console.log(image,title,lo2[(videoNo.current.id)-1])
+}
 
   return (
    <>
