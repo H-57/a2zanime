@@ -191,6 +191,8 @@ const {videoNo,setVideoNo}=useContext(VideoNoContext)
   return (
     <>
       <Head>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6866623175181631"
+     crossorigin="anonymous"></script>
         <title>{Content.title}</title>
         <meta name="description" content={Content.description} />
         <meta name="keywords" content="all anime videos,video,pokemon" />
