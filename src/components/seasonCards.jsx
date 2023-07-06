@@ -18,7 +18,7 @@ function SeasonCards(props) {
 /* for define size of video cards */
    .card{
    width: 10rem;
-   height: 14rem;
+   height: 20rem;
    color: aliceblue;
    /* border: solid 1px red; */
    /* margin: 5px; */

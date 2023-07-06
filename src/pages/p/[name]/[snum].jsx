@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import VideoCards from "../../../components/VideoCards";
 import{IframeContext,VideoNoContext}from'../../../context/videoData'
-
+import Script from "next/script";
 export async function getStaticPaths() {
   let Aname = await (await fetch(`${process.env.API_URL}/anime/.json`)).json(); //fetch data present in database
 
@@ -18,7 +18,7 @@ export async function getStaticPaths() {
     const data = await (
       await fetch(`${process.env.API_URL}/anime/${Aname[i]}/season.json`)
     ).json(); //fetch data for present particular anime all seasons data
-
+// console.log(data)
     const newPaths = data.map((_elem, index) => {
       //return s complete path for static pages
 
@@ -82,8 +82,8 @@ const {videoNo,setVideoNo}=useContext(VideoNoContext)
   let SERVER3;
   let SERVER4;
   let SERVER5;
-
-  // console.log(Seasons)
+  setIframe(SERVER1[0]);
+  console.log(SERVER1)
 
   
   const [Server, setServer] = useState(SERVER1);
@@ -217,6 +217,9 @@ const {videoNo,setVideoNo}=useContext(VideoNoContext)
           next
         </button>
       </div>
+      
+
+
       <div className="seasonlist">
         <button
           onClick={() => {
