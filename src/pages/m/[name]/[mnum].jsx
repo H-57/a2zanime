@@ -8,9 +8,18 @@ import { useRouter } from "next/router";
 
 
 export async function getStaticPaths() {
-    let Aname = await (await fetch(`${process.env.API_URL}/movie/.json`)).json(); //fetch data present in database
-  
+  let Aname;
+  try {
+    
+     Aname = await (await fetch(`${process.env.API_URL}/movie/.json`)).json(); //fetch data present in database
+     console.log(Aname);
     Aname = Object.keys(Aname); //convert object into keys array
+    console.log(Aname);
+  } catch (error) {
+    console.log(error);
+  }
+  
+   
     let paths = [];
   
     // console.log(Aname)
