@@ -108,9 +108,11 @@ const {videoNo,setVideoNo}=useContext(VideoNoContext)
 
 
  
-const handleLinkClick = (index) => {
-  
-  router.reload(window.location.pathname)
+const handleLinkClick = () => {
+  setTimeout(()=>{
+    router.reload(window.location.pathname)
+
+  },1500)
 };
 
 
@@ -239,7 +241,7 @@ const handleLinkClick = (index) => {
         <ul id="slist" className="hide">
           {Seasons.map((_elem, index) => {
             return (
-              <Link onClick={(index)=>{ handleLinkClick(index)}}
+              <Link onClick={()=>{ handleLinkClick()}}
                 key={index}
                 href={`/p/${router.query.name}/season${index + 1}`}
               >
