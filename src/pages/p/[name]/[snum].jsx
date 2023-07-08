@@ -1,10 +1,11 @@
 import Head from "next/head";
 import Link from "next/link";
+
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import VideoCards from "../../../components/VideoCards";
-import{IframeContext,VideoNoContext}from'../../../context/videoData'
-import Script from "next/script";
+import{IframeContext,SeasonContext,VideoNoContext}from'../../../context/videoData'
+
 export async function getStaticPaths() {
   let Aname = await (await fetch(`${process.env.API_URL}/anime/.json`)).json(); //fetch data present in database
 
@@ -77,17 +78,18 @@ function AnimeName({ data, serverEpisode, Seasons, Sbutton, Content }) {
   const router = useRouter();
 const{iframe,setIframe}=useContext(IframeContext)
 const {videoNo,setVideoNo}=useContext(VideoNoContext)
+
   let SERVER1 = serverEpisode.server1;
   let SERVER2;
   let SERVER3;
   let SERVER4;
   let SERVER5;
-  setIframe(SERVER1[0]);
-  console.log(SERVER1)
-
   
+
+ 
   const [Server, setServer] = useState(SERVER1);
   const [ServerName, setServerName] = useState("Server-1");
+ 
 
   let SbuttonArray = Object.keys(Sbutton);
  
@@ -101,12 +103,15 @@ const {videoNo,setVideoNo}=useContext(VideoNoContext)
   useEffect(()=>{
   
     setIframe(Server[videoNo ]);
-    
+   
   },[Server,videoNo])
 
 
-
-
+ 
+const handleLinkClick = (index) => {
+  
+  router.reload(window.location.pathname)
+};
 
 
 
@@ -192,7 +197,7 @@ const {videoNo,setVideoNo}=useContext(VideoNoContext)
     <>
       <Head>
       <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6866623175181631"
-     crossorigin="anonymous"></script>
+     crossOrigin="anonymous"></script>
         <title>{Content.title}</title>
         <meta name="description" content={Content.description} />
         <meta name="keywords" content="all anime videos,video,pokemon" />
@@ -230,11 +235,11 @@ const {videoNo,setVideoNo}=useContext(VideoNoContext)
         >
           All Seasons <i id="licon" className="fa fa-chevron-down"></i>
         </button>
-
+{/* populate season lists */}
         <ul id="slist" className="hide">
           {Seasons.map((_elem, index) => {
             return (
-              <Link 
+              <Link onClick={(index)=>{ handleLinkClick(index)}}
                 key={index}
                 href={`/p/${router.query.name}/season${index + 1}`}
               >
