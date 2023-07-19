@@ -1,4 +1,3 @@
-
 import Head from "next/head";
 import Link from "next/link";
 
@@ -9,41 +8,56 @@ import{IframeContext,SeasonContext,VideoNoContext}from'../../../context/videoDat
 
 
 
-
-
-
-
-
 export const getServerSideProps = async (context) => {
-  const Movie = context.params.mnum; //variable for store Movie no
+  const Season = context.params.mnum; //variable for store season no
   const AnimeName = context.params.name; // var for store anime name
+try {
+  let res = await fetch(
+    `${process.env.API_URL}/movie/${AnimeName}/${Season}.json` //fetch data for a particular anime and its season number
+  );
+  const data = await res.json();
+  let serverEpisodeData = await fetch(
+    `${process.env.API_URL}/movie/${AnimeName}/${Season}ep.json`
+  );
+  const serverEpisode = await serverEpisodeData.json();
 
-  // console.log(AnimeName)
-  try {
-    let res = await fetch(
-      `${process.env.API_URL}/movie/${AnimeName}/${Movie}.json` //fetch data for a particular anime and its Movie number
-    );
-    const data = await res.json();
-    let serverEpisodeData = await fetch(`${process.env.API_URL}/movie/${AnimeName}/${Movie}.json`);
-    const serverEpisode = await serverEpisodeData.json();
-    let Sbutton = await(await fetch(`${process.env.API_URL}/movie/${AnimeName}/${Movie}.json`)).json();
-    let Movies = await(await fetch(`${process.env.API_URL}/movie/${AnimeName}/movie.json`)).json();
-
+  let Seasons = await (
+    await fetch(`${process.env.API_URL}/movie/${AnimeName}/season.json`)
+  ).json();
+  let Sbutton = await (
+    await fetch(`${process.env.API_URL}/movie/${AnimeName}/${Season}ep.json`)
+  ).json();
+  let Content = await (
+    await fetch(
+      `${process.env.API_URL}/movie/${AnimeName}/${Season}Content.json`
+    )
+  ).json();
+  if (data === null) {
     return {
       props: {
-        data,
-        serverEpisode,
-        Movies,
-        Sbutton,
+        
+        error: true,
       },
     };
-  } catch (error) {
-    return{
-      props:{error: true,}
-    }
   }
-  
-  
+  return {
+    props: {
+      data,
+      serverEpisode,
+      Seasons,
+      Sbutton,
+      Content,
+    },
+  };
+} catch (error) {
+  return {
+    props: {
+      error:true
+    },
+  };
+}
+ 
+ 
 };
 
 function AnimeName({ data, serverEpisode, Seasons, Sbutton, Content,error }) {
@@ -237,7 +251,7 @@ const handleLinkClick = () => {
         </ul>
       </div>
       <div id="episodeno">
-        Episode {videoNo+1} ({ServerName})
+        Movie {videoNo+1} ({ServerName})
       </div>
       <div className="server">
         {SbuttonArray?.map((elem, index) => {
@@ -261,7 +275,7 @@ const handleLinkClick = () => {
         {data?.map((elem, index) => {
           return (
             <VideoCards
-              
+            cardname={"Movie"}
               videoUrl={Server}
               key={index}
               title={elem.title}
@@ -424,4 +438,5 @@ const handleLinkClick = () => {
     </>
   );
 }
+
 export default AnimeName;

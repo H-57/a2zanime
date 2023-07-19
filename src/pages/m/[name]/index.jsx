@@ -15,7 +15,7 @@ export const getServerSideProps = async (context) => {
 
   try {
     let data = await (await fetch(
-      `${process.env.API_URL}/movie/${name}/movie.json`
+      `${process.env.API_URL}/movie/${name}/movieCards.json`
     )).json();
 
     if (data === null) {
@@ -44,7 +44,7 @@ export const getServerSideProps = async (context) => {
 };
 
 function AnimeName({ data ,error}) {
-  console.log(error,data)
+  // console.log(error,data)
   useEffect(() => {
     if(error){
 

@@ -2,7 +2,7 @@ import {useRef,useContext, useEffect} from 'react'
 import Image from 'next/image'
 import{IframeContext,VideoNoContext}from'../context/videoData'
 
-function VideoCards({videoUrl,number,image,title}) {
+function VideoCards({videoUrl,number,image,title,cardname}) {
 const {setIframe,iframe}=useContext(IframeContext);
 const {videoNo,setVideoNo}=useContext(VideoNoContext)
   useEffect(()=>{
@@ -40,7 +40,7 @@ const setVideo=()=>{
     
 <figure><Image src={image} alt={title} className="thumbnail" width={150} height={20}/></figure>
 
-<span className="epnumber">Episode {number +1}</span>
+<span className="epnumber">{cardname}  {number +1}</span>
 <header><h3> {title}</h3></header>
 <span className="material-symbols-outlined play">
  play_circle

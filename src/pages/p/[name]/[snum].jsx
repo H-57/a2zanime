@@ -275,7 +275,7 @@ const handleLinkClick = () => {
         {data?.map((elem, index) => {
           return (
             <VideoCards
-              
+            cardname={"Episode"}
               videoUrl={Server}
               key={index}
               title={elem.title}
