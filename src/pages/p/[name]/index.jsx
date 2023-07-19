@@ -2,42 +2,53 @@ import SeasonCards from "../../../components/seasonCards";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import { useEffect } from "react";
 
-export async function getStaticPaths() {
-  let data = await (await fetch(`${process.env.API_URL}/anime/.json`)).json(); //get data for exists all animes
-  data = Object.keys(data);
 
-  const paths = data.map((elem) => {
-    //return present anime pages
+export const getServerSideProps = async (context) => {
+  const name = context.params.name;
+
+  try {
+    let data = await (await fetch(
+      `${process.env.API_URL}/anime/${name}/season.json`
+    )).json();
+
+    if (data === null) {
+      return {
+        props: {
+          data: null,
+          error: true,
+        },
+      };
+    }
+
     return {
-      params: {
-        name: elem.toString(),
+      props: {
+        data, 
+        error: false, 
       },
     };
-  });
-  return {
-    paths,
-
-    fallback: false,
-  };
-}
-
-export const getStaticProps = async (context) => {
-  const name = context.params.name;
-  console.log(name);
-  let res = await fetch(
-    `${process.env.API_URL}/anime/${name}/season.json` //get data for present animes and thir seasons and show all season cards
-  );
-  const data = await res.json();
-  return {
-    props: {
-      data,
-    },
-  };
+  } catch (error) {
+    return {
+      props: {
+        data: null,
+        error: true,
+      },
+    };
+  }
 };
 
-function AnimeName({ data }) {
+function AnimeName({ data,error }) {
   const router = useRouter();
+
+  useEffect(() => {
+    if(error){
+
+     
+      router.push("/")
+    }
+ 
+  }, [])
 
   return (
     <>
@@ -52,7 +63,7 @@ function AnimeName({ data }) {
       </Head>
 
       <ul id="video" className="video">
-        {data.map((elem, index) => {
+        {data?.map((elem, index) => {
           return (
             
               <Link key={index} href={`/p/${router.query.name}/season${index + 1}`}>
@@ -61,6 +72,7 @@ function AnimeName({ data }) {
             
           );
         })}
+        
       </ul>
       <style jsx>{`
         /* for ul list store all video cards */

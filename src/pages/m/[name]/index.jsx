@@ -1,51 +1,62 @@
 
 import SeasonCards from "../../../components/seasonCards";
 import Link from "next/link";
+import { useEffect } from "react";
+import Router from "next/router";
 
 
 
 
-export async function getStaticPaths() {
 
 
-  let data = await (
-    await fetch(`${process.env.API_URL}/movie/.json`)).json();      //get data for exists all animes                                     
-  data = Object.keys(data)
 
-  const paths = data.map((elem) => {                //return present anime pages
+export const getServerSideProps = async (context) => {
+  const name = context.params.name;
+
+  try {
+    let data = await (await fetch(
+      `${process.env.API_URL}/movie/${name}/movie.json`
+    )).json();
+
+    if (data === null) {
+      return {
+        props: {
+          data: null,
+          error: true,
+        },
+      };
+    }
+
     return {
-      params: {
-        name: (elem).toString(),
+      props: {
+        data, // Move 'data' property under 'props' key
+        error: false, // Make sure 'error' property is nested under 'props' key
       },
     };
-  });
-  return {
-
-    paths,
-
-    fallback: false,
-
+  } catch (error) {
+    return {
+      props: {
+        data: null,
+        error: true,
+      },
+    };
   }
-}
-
-
-export const getStaticProps = async (context) => {
-  const name = context.params.name
-  console.log(name)
-  let data = await (await fetch(
-    `${process.env.API_URL}/movie/${name}/movie.json` //get data for present animes and thir seasons and show all season cards
-  )).json();
-
-  return {
-    props: {
-      data,
-    },
-  };
 };
 
-function AnimeName({ data }) {
+function AnimeName({ data ,error}) {
+  console.log(error,data)
+  useEffect(() => {
+    if(error){
 
+     
+      Router.push("/")
+    }
+ 
+  }, [])
+  
+  
 
+ 
 
 
 
@@ -55,7 +66,7 @@ function AnimeName({ data }) {
 
 
       <ul id="video" className="video">
-        {data.map((elem, index) => {
+        {data?.map((elem, index) => {
 
           return <Link key={index} href={elem.url}>
             <SeasonCards title={elem.title} image={elem.image} />
@@ -89,5 +100,6 @@ function AnimeName({ data }) {
 
 
 }
+
 
 export default AnimeName;

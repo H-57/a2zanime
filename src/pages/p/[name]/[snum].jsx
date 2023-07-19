@@ -6,42 +6,12 @@ import { useContext, useEffect, useState } from "react";
 import VideoCards from "../../../components/VideoCards";
 import{IframeContext,SeasonContext,VideoNoContext}from'../../../context/videoData'
 
-export async function getStaticPaths() {
-  let Aname = await (await fetch(`${process.env.API_URL}/anime/.json`)).json(); //fetch data present in database
 
-  Aname = Object.keys(Aname); //convert object into keys array
-  let paths = [];
 
-  // console.log(Aname)
-  for (let i = 0; i < Aname.length; i++) {
-    //for loop for formed path for each anime for its all seasons
-
-    const data = await (
-      await fetch(`${process.env.API_URL}/anime/${Aname[i]}/season.json`)
-    ).json(); //fetch data for present particular anime all seasons data
-// console.log(data)
-    const newPaths = data.map((_elem, index) => {
-      //return s complete path for static pages
-
-      return {
-        params: {
-          name: Aname[i].toString(),
-          snum: ("season" + (index + 1)).toString(),
-        },
-      };
-    });
-
-    paths = paths.concat(newPaths); //add path of all anime seasons and append next anime path data
-  }
-
-  return { paths, fallback: false };
-}
-
-export const getStaticProps = async (context) => {
+export const getServerSideProps = async (context) => {
   const Season = context.params.snum; //variable for store season no
   const AnimeName = context.params.name; // var for store anime name
-
-  // console.log(AnimeName)
+try {
   let res = await fetch(
     `${process.env.API_URL}/anime/${AnimeName}/${Season}.json` //fetch data for a particular anime and its season number
   );
@@ -62,7 +32,14 @@ export const getStaticProps = async (context) => {
       `${process.env.API_URL}/anime/${AnimeName}/${Season}Content.json`
     )
   ).json();
-
+  if (data === null) {
+    return {
+      props: {
+        
+        error: true,
+      },
+    };
+  }
   return {
     props: {
       data,
@@ -72,14 +49,32 @@ export const getStaticProps = async (context) => {
       Content,
     },
   };
+} catch (error) {
+  return {
+    props: {
+      error:true
+    },
+  };
+}
+ 
+ 
 };
 
-function AnimeName({ data, serverEpisode, Seasons, Sbutton, Content }) {
+function AnimeName({ data, serverEpisode, Seasons, Sbutton, Content,error }) {
   const router = useRouter();
+
+  useEffect(() => {
+    if(error){
+
+   
+      router.push("/")
+    }
+ 
+  }, [])
 const{iframe,setIframe}=useContext(IframeContext)
 const {videoNo,setVideoNo}=useContext(VideoNoContext)
 
-  let SERVER1 = serverEpisode.server1;
+  let SERVER1 = serverEpisode?.server1;
   let SERVER2;
   let SERVER3;
   let SERVER4;
@@ -89,21 +84,24 @@ const {videoNo,setVideoNo}=useContext(VideoNoContext)
  
   const [Server, setServer] = useState(SERVER1);
   const [ServerName, setServerName] = useState("Server-1");
+  let SbuttonArray
+if(Sbutton){
+  SbuttonArray =Object.keys(Sbutton);
  
-
-  let SbuttonArray = Object.keys(Sbutton);
- 
-
+}
   useEffect(() => {
-    setIframe(SERVER1[0]);
-    document.getElementsByClassName("card")
-      [0].classList.add("check");
+    if(data){
+      setIframe(SERVER1[0]);
+      document.getElementsByClassName("card")
+        [0].classList.add("check");
+    }
+    
   }, []);
 
   useEffect(()=>{
-  
+    if(data){
     setIframe(Server[videoNo ]);
-   
+    }
   },[Server,videoNo])
 
 
@@ -200,11 +198,11 @@ const handleLinkClick = () => {
       <Head>
       <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6866623175181631"
      crossOrigin="anonymous"></script>
-        <title>{Content.title}</title>
-        <meta name="description" content={Content.description} />
+        <title>{Content?.title}</title>
+        <meta name="description" content={Content?.description} />
         <meta name="keywords" content="all anime videos,video,pokemon" />
       </Head>
-      <h1>{Content.heading1}</h1>
+      <h1>{Content?.heading1}</h1>
       <div style={{ height: "400px" }}>
         <iframe
           allowFullScreen={true}
@@ -239,7 +237,7 @@ const handleLinkClick = () => {
         </button>
 {/* populate season lists */}
         <ul id="slist" className="hide">
-          {Seasons.map((_elem, index) => {
+          {Seasons?.map((_elem, index) => {
             return (
               <Link onClick={()=>{ handleLinkClick()}}
                 key={index}
@@ -256,7 +254,7 @@ const handleLinkClick = () => {
         Episode {videoNo+1} ({ServerName})
       </div>
       <div className="server">
-        {SbuttonArray.map((elem, index) => {
+        {SbuttonArray?.map((elem, index) => {
           return (
             <button
               key={elem}
@@ -271,10 +269,10 @@ const handleLinkClick = () => {
         })}
       </div>
 
-      <h2>{Content.heading2}</h2>
+      <h2>{Content?.heading2}</h2>
 
       <ul id="video" className="video">
-        {data.map((elem, index) => {
+        {data?.map((elem, index) => {
           return (
             <VideoCards
               

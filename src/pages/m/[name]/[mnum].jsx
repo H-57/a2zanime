@@ -1,158 +1,194 @@
 
-import { useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
+
 import { useRouter } from "next/router";
+import { useContext, useEffect, useState } from "react";
+import VideoCards from "../../../components/VideoCards";
+import{IframeContext,SeasonContext,VideoNoContext}from'../../../context/videoData'
 
 
 
 
-export async function getStaticPaths() {
-  let Aname;
-  try {
-    
-     Aname = await (await fetch(`${process.env.API_URL}/movie/.json`)).json(); //fetch data present in database
-     console.log(Aname);
-    Aname = Object.keys(Aname); //convert object into keys array
-    console.log(Aname);
-  } catch (error) {
-    console.log(error);
-  }
-  
-   
-    let paths = [];
-  
-    // console.log(Aname)
-    for (let i = 0; i < Aname.length; i++) {
-      //for loop for formed path for each anime for its all seasons
-  
-      const data = await (
-        await fetch(`${process.env.API_URL}/movie/${Aname[i]}/movie.json`)
-      ).json(); //fetch data for present particular anime all seasons data
-     
-      const newPaths = data.map((elem, index) => {
-        //return s complete path for static pages
-  
-        return {
-          params: {
-            name: Aname[i].toString(),
-            mnum: ("movie" + (index + 1)).toString(),
-          },
-        };
-      });
-  
-      paths = paths.concat(newPaths); //add path of all anime seasons and append next anime path data
-    }
-  
-    return { paths, fallback: false };
-  }
 
 
 
-export const getStaticProps = async (context) => {
+
+export const getServerSideProps = async (context) => {
   const Movie = context.params.mnum; //variable for store Movie no
   const AnimeName = context.params.name; // var for store anime name
 
   // console.log(AnimeName)
-  let res = await fetch(
-    `${process.env.API_URL}/movie/${AnimeName}/${Movie}.json` //fetch data for a particular anime and its Movie number
-  );
-  const data = await res.json();
-  let serverEpisodeData = await fetch(`${process.env.API_URL}/movie/${AnimeName}/${Movie}.json`);
-  const serverEpisode = await serverEpisodeData.json();
-  let Sbutton = await(await fetch(`${process.env.API_URL}/movie/${AnimeName}/movie1.json`)).json();
-  let Movies = await(await fetch(`${process.env.API_URL}/movie/${AnimeName}/movie.json`)).json();
-  return {
-    props: {
-      data,
-      serverEpisode,
-      Movies,
-      Sbutton,
-    },
-  };
+  try {
+    let res = await fetch(
+      `${process.env.API_URL}/movie/${AnimeName}/${Movie}.json` //fetch data for a particular anime and its Movie number
+    );
+    const data = await res.json();
+    let serverEpisodeData = await fetch(`${process.env.API_URL}/movie/${AnimeName}/${Movie}.json`);
+    const serverEpisode = await serverEpisodeData.json();
+    let Sbutton = await(await fetch(`${process.env.API_URL}/movie/${AnimeName}/${Movie}.json`)).json();
+    let Movies = await(await fetch(`${process.env.API_URL}/movie/${AnimeName}/movie.json`)).json();
+
+    return {
+      props: {
+        data,
+        serverEpisode,
+        Movies,
+        Sbutton,
+      },
+    };
+  } catch (error) {
+    return{
+      props:{error: true,}
+    }
+  }
+  
+  
 };
 
-function AnimeName({ serverEpisode,Movies,Sbutton }) {
+function AnimeName({ data, serverEpisode, Seasons, Sbutton, Content,error }) {
   const router = useRouter();
-  let SbuttonArray=Object.keys(Sbutton);
-  let SERVER1 = serverEpisode.server1;
+
+  useEffect(() => {
+    if(error){
+
+   
+      router.push("/")
+    }
+ 
+  }, [])
+const{iframe,setIframe}=useContext(IframeContext)
+const {videoNo,setVideoNo}=useContext(VideoNoContext)
+
+  let SERVER1 = serverEpisode?.server1;
   let SERVER2;
   let SERVER3;
   let SERVER4;
   let SERVER5;
-// console.log(Movies)
-  const [iframe, setiframe] = useState(SERVER1[0]);
+  
 
+ 
   const [Server, setServer] = useState(SERVER1);
-const [ServerName, setServerName] = useState("Server-1")
-
-  
-const lang=(index)=>{
-  switch (index) {
-    case 0:
-     return  Sbutton.server1.language;
-     
-    case 1:
-      return  Sbutton.server2.language;
-     
-    case 2:
-      return  Sbutton.server3.language;
-     
-    case 3:
-     return   Sbutton.server4.language;
-     
-    case 4:
-     return   Sbutton.server5.language;
-     
-
-  }
+  const [ServerName, setServerName] = useState("Server-1");
+  let SbuttonArray
+if(Sbutton){
+  SbuttonArray =Object.keys(Sbutton);
+ 
 }
-const SERVER=(index)=>{
-  switch (index) {
-    case 0:
-      return SERVER1
-    case 1:
-      SERVER2= serverEpisode.server2;
-      return SERVER2
-    case 2:
-      SERVER3= serverEpisode.server3;
-      return SERVER3
-    case 3:
-      SERVER4= serverEpisode.server4;
-      return SERVER4
-    case 4:
-      SERVER5= serverEpisode.server5;
-      return SERVER5
-  
+  useEffect(() => {
+    if(data){
+      setIframe(SERVER1[0]);
+      document.getElementsByClassName("card")
+        [0].classList.add("check");
+    }
     
-  }
-}
+  }, []);
 
-const ServerChange=(e,index) => {
+  useEffect(()=>{
+    if(data){
+    setIframe(Server[videoNo ]);
+    }
+  },[Server,videoNo])
 
-  setServer(SERVER(index));
-  setiframe(Server[0]);
-  setServerName(e.target.innerText)
-  // console.log(serverNo);
-}
 
+ 
+const handleLinkClick = () => {
+  setTimeout(()=>{
+    router.reload(window.location.pathname)
+
+  },1500)
+};
+
+
+
+  const lang = (index) => {
+    switch (index) {
+      case 0:
+        return Sbutton.server1.language;
+
+      case 1:
+        return Sbutton.server2.language;
+
+      case 2:
+        return Sbutton.server3.language;
+
+      case 3:
+        return Sbutton.server4.language;
+
+      case 4:
+        return Sbutton.server5.language;
+    }
+  };
+  const SERVER = (index) => {
+    switch (index) {
+      case 0:
+        return SERVER1;
+      case 1:
+        SERVER2 = serverEpisode.server2;
+        return SERVER2;
+      case 2:
+        SERVER3 = serverEpisode.server3;
+        return SERVER3;
+      case 3:
+        SERVER4 = serverEpisode.server4;
+        return SERVER4;
+      case 4:
+        SERVER5 = serverEpisode.server5;
+        return SERVER5;
+    }
+  };
+
+  const ServerChange = (e, index) => {
+    setServer(SERVER(index));
+    setServerName(e.target.innerText)
+    // console.log(serverNo);
+  };
+  const handelBack = () => {
+    if (videoNo<=0)return false; 
+      let lielm = document.getElementsByClassName("check");
+      // console.log(lielm)
+      Array.from(lielm).forEach((element) => {
+        //travel all card and remove check class
+        element.classList.remove("check");
+      });
+
+      document
+      .getElementsByClassName("card")
+      [videoNo-1].classList.add("check");
+      // console.log(videoNumber);
+      setVideoNo(videoNo - 1);
+      
+      // console.log(videoNumber);
+     
+    
+  };
+  const handelNext = () => {
+    if (videoNo != data.length-1) {
+      let lielm = document.getElementsByClassName("check");
+      // console.log(lielm)
+      Array.from(lielm).forEach((element) => {
+        //travel all card and remove check class
+        element.classList.remove("check");
+      });
+     
+      setVideoNo(videoNo + 1);
+      document
+        .getElementsByClassName("card")
+        [videoNo+1].classList.add("check");
+      // console.log(videoNumber);
+    }
+  };
 
   return (
     <>
       <Head>
-        <title>
-          {serverEpisode.title}
-        </title>
-        <meta
-          name="description"
-          content={serverEpisode.description}
-        />
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6866623175181631"
+     crossOrigin="anonymous"></script>
+        <title>{Content?.title}</title>
+        <meta name="description" content={Content?.description} />
         <meta name="keywords" content="all anime videos,video,pokemon" />
-        
       </Head>
-      <h1>
-        {serverEpisode.heading}
-      </h1>
+      <h1>{Content?.heading1}</h1>
       <div style={{ height: "400px" }}>
         <iframe
           allowFullScreen={true}
@@ -163,50 +199,89 @@ const ServerChange=(e,index) => {
         ></iframe>
       </div>
 
-    
-      <div className="seasonlist">
-        <button onClick={()=>{
-          document.getElementById('slist').classList.toggle("hide");
-          document.getElementById('licon').classList.toggle("rotate");
-
-        }} className="listbtn">All Movies <i id="licon" className="fa fa-chevron-down"></i></button>
-      
-        <ul id="slist" className="hide">
-        {Movies.map((elem, index) => {
-          return (<Link key={index} href={`/m/${router.query.name}/movie${index+1}`}> <li>Movie{index+1}</li></Link>)})}
-         
-        
-        </ul>
-        </div>
-      <div id="episodeno">  ({ServerName})</div>
-      <div className="server">
-      {SbuttonArray.map((elem,index)=>{
-          return(
-<button key={elem}
-          className="button-63 "
-          onClick={(e)=>{ServerChange(e,index)}}
-        >
-          Server-{index+1} ({lang(index) })
+      <div className="conbtn">
+        <button onClick={handelBack} className="btn ">
+          back
         </button>
-          )
+
+        <button onClick={handelNext} className="btn ">
+          next
+        </button>
+      </div>
+      
+
+
+      <div className="seasonlist">
+        <button
+          onClick={() => {
+            document.getElementById("slist").classList.toggle("hide");
+            document.getElementById("licon").classList.toggle("rotate");
+          }}
+          className="listbtn"
+        >
+          All Seasons <i id="licon" className="fa fa-chevron-down"></i>
+        </button>
+{/* populate season lists */}
+        <ul id="slist" className="hide">
+          {Seasons?.map((_elem, index) => {
+            return (
+              <Link onClick={()=>{ handleLinkClick()}}
+                key={index}
+                href={`/p/${router.query.name}/season${index + 1}`}
+              >
+                {" "}
+                <li >seaon{index + 1}</li>
+              </Link>
+            );
+          })}
+        </ul>
+      </div>
+      <div id="episodeno">
+        Episode {videoNo+1} ({ServerName})
+      </div>
+      <div className="server">
+        {SbuttonArray?.map((elem, index) => {
+          return (
+            <button
+              key={elem}
+              className="button-63 "
+              onClick={(e) => {
+                ServerChange(e, index);
+              }}
+            >
+              Server-{index + 1} ({lang(index)})
+            </button>
+          );
         })}
       </div>
 
-      <h2>
-       {serverEpisode.heading2}
-      </h2>
+      <h2>{Content?.heading2}</h2>
 
+      <ul id="video" className="video">
+        {data?.map((elem, index) => {
+          return (
+            <VideoCards
+              
+              videoUrl={Server}
+              key={index}
+              title={elem.title}
+              image={elem.image}
+              number={index}
+            />
+          );
+        })}
+      </ul>
       <style jsx>{`
         /* for ul list store all video cards */
-      .listbtn{
-        background: #6a0c6a;
-font-size: 1rem;
-cursor:pointer;
-height: 3rem;
-      }
-       .rotate{
-        transform: rotate(180deg);
-       }
+        .listbtn {
+          background: #6a0c6a;
+          font-size: 1rem;
+          cursor: pointer;
+          height: 3rem;
+        }
+        .rotate {
+          transform: rotate(180deg);
+        }
         .video {
           display: flex;
           flex-wrap: wrap;
@@ -248,40 +323,37 @@ height: 3rem;
           display: flex;
           position: absolute;
           right: 0;
-          top: 212px;
+          top: 126px;
           width: 30%;
           height: 345px;
           flex-direction: column;
         }
         .Sbtn {
-         
           color: black;
           margin: auto;
           background: cornflowerblue;
           border-radius: 5px;
           font-size: 34px;
         }
-       .btn:hover{
-        font-size:larger
-       }
+        .btn:hover {
+          font-size: larger;
+        }
 
-.seasonlist{
-  margin-left: 2rem;
-}
-        .seasonlist ul{
-        
-width: fit-content;
+        .seasonlist {
+          margin-left: 2rem;
+        }
+        .seasonlist ul {
+          width: fit-content;
           background: blueviolet;
           font-size: x-large;
           position: relative;
-          
         }
-        .seasonlist ul li{
+        .seasonlist ul li {
           background: #5e0288;
           margin-bottom: 5px;
         }
-        .seasonlist ul li:hover{
-          background:#8b0ac6
+        .seasonlist ul li:hover {
+          background: #8b0ac6;
         }
 
         @media only screen and (max-width: 400px) {
@@ -303,16 +375,20 @@ width: fit-content;
         }
 
         .button-63 {
-          margin:auto;
-        
-         
+          margin: auto;
+
           align-items: center;
-          background-image: linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB);
+          background-image: linear-gradient(
+            144deg,
+            #af40ff,
+            #5b42f3 50%,
+            #00ddeb
+          );
           border: 0;
           border-radius: 50px;
           box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
           box-sizing: border-box;
-          color: #FFFFFF;
+          color: #ffffff;
           display: flex;
           font-family: Phantomsans, sans-serif;
           font-size: 20px;
@@ -327,19 +403,19 @@ width: fit-content;
           touch-action: manipulation;
           white-space: nowrap;
           cursor: pointer;
-          margin-right:20px;
+          margin-right: 20px;
           margin-bottom: 10px;
         }
-       
+
         .button-63:active,
         .button-63:hover {
           outline: 0;
-          font-size:larger
+          font-size: larger;
         }
-        
+
         @media (min-width: 768px) {
           .button-63 {
-            margin-right:20px;
+            margin-right: 20px;
             font-size: 1.5rem;
             min-width: 196px;
           }
@@ -348,5 +424,4 @@ width: fit-content;
     </>
   );
 }
-
 export default AnimeName;
