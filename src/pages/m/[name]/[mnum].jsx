@@ -27,7 +27,7 @@ try {
  
   let Content = await (
     await fetch(
-      `${process.env.API_URL}/movie/${AnimeName}/movieContent/${MovieNumber}.json`
+      `${process.env.API_URL}/movie/${AnimeName}/movieContent/${MovieNumber-1}.json`
     )
   ).json();
   if (Content === null) {
@@ -61,7 +61,7 @@ try {
 
 function AnimeName({ MovieNumber,serverEpisode, Movies, Sbutton, Content,error }) {
   const router = useRouter();
- console.log(error,Content)
+
 
   useEffect(() => {
     if(error){
