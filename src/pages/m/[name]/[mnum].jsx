@@ -3,36 +3,34 @@ import Link from "next/link";
 
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
-import VideoCards from "../../../components/VideoCards";
-import{IframeContext,SeasonContext,VideoNoContext}from'../../../context/videoData'
+
+import{IframeContext}from'../../../context/videoData'
 
 
 
 export const getServerSideProps = async (context) => {
-  const Season = context.params.mnum; //variable for store season no
+  const MovieNumber = context.params.mnum.replace("movie",'') //variable for store season no
   const AnimeName = context.params.name; // var for store anime name
 try {
-  let res = await fetch(
-    `${process.env.API_URL}/movie/${AnimeName}/${Season}.json` //fetch data for a particular anime and its season number
-  );
-  const data = await res.json();
+  
+ 
   let serverEpisodeData = await fetch(
-    `${process.env.API_URL}/movie/${AnimeName}/${Season}ep.json`
+    `${process.env.API_URL}/movie/${AnimeName}/moviesep/.json`
   );
   const serverEpisode = await serverEpisodeData.json();
 
-  let Seasons = await (
-    await fetch(`${process.env.API_URL}/movie/${AnimeName}/season.json`)
+  let Movies = await (
+    await fetch(`${process.env.API_URL}/movie/${AnimeName}/movieCards.json`)
   ).json();
-  let Sbutton = await (
-    await fetch(`${process.env.API_URL}/movie/${AnimeName}/${Season}ep.json`)
-  ).json();
+  let Sbutton = serverEpisode
+ 
+ 
   let Content = await (
     await fetch(
-      `${process.env.API_URL}/movie/${AnimeName}/${Season}Content.json`
+      `${process.env.API_URL}/movie/${AnimeName}/movieContent/${MovieNumber}.json`
     )
   ).json();
-  if (data === null) {
+  if (Content === null) {
     return {
       props: {
         
@@ -42,11 +40,12 @@ try {
   }
   return {
     props: {
-      data,
+      MovieNumber,
       serverEpisode,
-      Seasons,
+      Movies,
       Sbutton,
       Content,
+     
     },
   };
 } catch (error) {
@@ -60,8 +59,9 @@ try {
  
 };
 
-function AnimeName({ data, serverEpisode, Seasons, Sbutton, Content,error }) {
+function AnimeName({ MovieNumber,serverEpisode, Movies, Sbutton, Content,error }) {
   const router = useRouter();
+ console.log(error,Content)
 
   useEffect(() => {
     if(error){
@@ -72,9 +72,9 @@ function AnimeName({ data, serverEpisode, Seasons, Sbutton, Content,error }) {
  
   }, [])
 const{iframe,setIframe}=useContext(IframeContext)
-const {videoNo,setVideoNo}=useContext(VideoNoContext)
 
-  let SERVER1 = serverEpisode?.server1;
+
+  let SERVER1 = serverEpisode?.server1[MovieNumber-1];
   let SERVER2;
   let SERVER3;
   let SERVER4;
@@ -90,19 +90,18 @@ if(Sbutton){
  
 }
   useEffect(() => {
-    if(data){
-      setIframe(SERVER1[0]);
-      document.getElementsByClassName("card")
-        [0].classList.add("check");
+    if(Movies){
+      setIframe(SERVER1);
+      
     }
     
   }, []);
 
   useEffect(()=>{
-    if(data){
-    setIframe(Server[videoNo ]);
+    if(Movies){
+    setIframe(Server);
     }
-  },[Server,videoNo])
+  },[Server])
 
 
  
@@ -138,16 +137,16 @@ const handleLinkClick = () => {
       case 0:
         return SERVER1;
       case 1:
-        SERVER2 = serverEpisode.server2;
+        SERVER2 = serverEpisode?.server2[MovieNumber-1];
         return SERVER2;
       case 2:
-        SERVER3 = serverEpisode.server3;
+        SERVER3 = serverEpisode?.server3[MovieNumber-1];
         return SERVER3;
       case 3:
-        SERVER4 = serverEpisode.server4;
+        SERVER4 = serverEpisode?.server4[MovieNumber-1];
         return SERVER4;
       case 4:
-        SERVER5 = serverEpisode.server5;
+        SERVER5 = serverEpisode?.server5[MovieNumber-1];
         return SERVER5;
     }
   };
@@ -157,41 +156,7 @@ const handleLinkClick = () => {
     setServerName(e.target.innerText)
     // console.log(serverNo);
   };
-  const handelBack = () => {
-    if (videoNo<=0)return false; 
-      let lielm = document.getElementsByClassName("check");
-      // console.log(lielm)
-      Array.from(lielm).forEach((element) => {
-        //travel all card and remove check class
-        element.classList.remove("check");
-      });
 
-      document
-      .getElementsByClassName("card")
-      [videoNo-1].classList.add("check");
-      // console.log(videoNumber);
-      setVideoNo(videoNo - 1);
-      
-      // console.log(videoNumber);
-     
-    
-  };
-  const handelNext = () => {
-    if (videoNo != data.length-1) {
-      let lielm = document.getElementsByClassName("check");
-      // console.log(lielm)
-      Array.from(lielm).forEach((element) => {
-        //travel all card and remove check class
-        element.classList.remove("check");
-      });
-     
-      setVideoNo(videoNo + 1);
-      document
-        .getElementsByClassName("card")
-        [videoNo+1].classList.add("check");
-      // console.log(videoNumber);
-    }
-  };
 
   return (
     <>
@@ -213,15 +178,7 @@ const handleLinkClick = () => {
         ></iframe>
       </div>
 
-      <div className="conbtn">
-        <button onClick={handelBack} className="btn ">
-          back
-        </button>
-
-        <button onClick={handelNext} className="btn ">
-          next
-        </button>
-      </div>
+      
       
 
 
@@ -233,25 +190,25 @@ const handleLinkClick = () => {
           }}
           className="listbtn"
         >
-          All Seasons <i id="licon" className="fa fa-chevron-down"></i>
+          All Movies <i id="licon" className="fa fa-chevron-down"></i>
         </button>
 {/* populate season lists */}
         <ul id="slist" className="hide">
-          {Seasons?.map((_elem, index) => {
+          {Movies?.map((_elem, index) => {
             return (
               <Link onClick={()=>{ handleLinkClick()}}
                 key={index}
-                href={`/p/${router.query.name}/season${index + 1}`}
+                href={`/m/${router.query.name}/movie${index + 1}`}
               >
                 {" "}
-                <li >seaon{index + 1}</li>
+                <li >Movie{index + 1}</li>
               </Link>
             );
           })}
         </ul>
       </div>
       <div id="episodeno">
-        Movie {videoNo+1} ({ServerName})
+        Movie {MovieNumber} ({ServerName})
       </div>
       <div className="server">
         {SbuttonArray?.map((elem, index) => {
@@ -269,22 +226,10 @@ const handleLinkClick = () => {
         })}
       </div>
 
-      <h2>{Content?.heading2}</h2>
 
-      <ul id="video" className="video">
-        {data?.map((elem, index) => {
-          return (
-            <VideoCards
-            cardname={"Movie"}
-              videoUrl={Server}
-              key={index}
-              title={elem.title}
-              image={elem.image}
-              number={index}
-            />
-          );
-        })}
-      </ul>
+      
+      <h2>{Content?.heading2}</h2>
+     
       <style jsx>{`
         /* for ul list store all video cards */
         .listbtn {
@@ -296,13 +241,7 @@ const handleLinkClick = () => {
         .rotate {
           transform: rotate(180deg);
         }
-        .video {
-          display: flex;
-          flex-wrap: wrap;
-
-          row-gap: 20px;
-          column-gap: 40px;
-        }
+      
 
         .conbtn {
           margin: auto;
