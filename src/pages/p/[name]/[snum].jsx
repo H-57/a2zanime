@@ -273,6 +273,8 @@ const handleLinkClick = () => {
 
       <ul id="video" className="video">
         {data?.map((elem, index) => {
+          if(elem.title==="") elem.title=`${router.query.name}:Episode-${index+1}`
+          if(elem.image==="") elem.image=Content?.image
           return (
             <VideoCards
             cardname={"Episode"}
