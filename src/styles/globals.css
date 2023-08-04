@@ -8,12 +8,13 @@ body {
 }
 
 
-      #episodeno,.neonheading { font-size: 2rem;
+      .episodeno,.neonheading { font-size: 2rem;
       margin: auto;
       display: block;
       width: fit-content;
       text-shadow: 0px 2px 3px aqua;
       color: aqua;
+      
     }
    
     .video {
@@ -29,4 +30,8 @@ body {
     }
     .hide{
         display:none
+      }
+      .h{
+        height: 100%!important;
+        
       }

@@ -20,7 +20,7 @@ function Hero() {
         <div className="slide">
           <div className="sl1" >
             {/* <Link href="/p/pokemon"> */}
-              <Image 
+              <Image className="h"
                 src="https://hacker57.netlify.app/src/pokemonallseason.png"
                 layout="responsive"    width={600}
                 height={340}
@@ -31,7 +31,7 @@ function Hero() {
           </div>
           <div className="sl">
             {/* <Link href="/single-page/pokemon-all-movies.html"> */}
-              <Image
+              <Image className="h"
                 src="https://hacker57.netlify.app/src/pokemonallseason.png"
                 layout="responsive"       width={400}
                 height={350}
@@ -42,7 +42,7 @@ function Hero() {
           </div>
           <div className="sl">
             {/* <Link href="/"> */}
-              <Image
+              <Image className="h"
                 src="https://hacker57.netlify.app/src/pokemonallseason.png"
                 layout="responsive"         width={400}
                 height={350}
@@ -57,9 +57,9 @@ function Hero() {
      
 #hero{
   display:flex;
-  width:100%;
-  height:120%;
-  overflow:hidden;
+height:70vh
+
+  
 }
 #feature{
   width:50%;
@@ -73,14 +73,14 @@ height: 87%;
 position: relative;
 }
   #stimg{
-    height:auto
+  
   }
     .slide {
       display: flex;
       flex-wrap: wrap;
       overflow-y: hidden;
       width:50%;
-      height:auto
+      
     }
    
     .sl1 {
@@ -90,7 +90,7 @@ position: relative;
     }
    
     .sl {
-      height: auto;
+      
       width: 50%;
       overflow:hidden
     }
